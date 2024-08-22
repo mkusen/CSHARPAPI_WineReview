@@ -1,0 +1,6 @@
+@CSHARPAPI_WineReview_HostAddress = http://localhost:5171
+
+GET {{CSHARPAPI_WineReview_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
