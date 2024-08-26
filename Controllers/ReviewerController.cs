@@ -1,121 +1,118 @@
 ﻿using CSHARPAPI_WineReview.Data;
 using CSHARPAPI_WineReview.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSHARPAPI_WineReview.Controllers
 {
-
-    //napravljena uz pomoć chatGPT
+    
 
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class ReviewerController:ControllerBase
+    public class ReviewerController : ControllerBase
     {
-
-        // Dependency Injection
+        //dependency injection
         private readonly WineReviewContext _context;
-
-        // Constructor Injection
+        //constructor injection
         public ReviewerController(WineReviewContext context)
         {
             _context = context;
         }
 
         /// <summary>
-        /// Get all rows from the Reviewers table.
+        /// Get all reviewers from the table.
         /// </summary>
         /// <returns>A list of reviewers.</returns>
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(_context.Reviewers);
+            var reviewers = await _context.Reviewers.ToListAsync();
+            return Ok(reviewers);
         }
 
         /// <summary>
-        /// Get a row by ID from the Reviewers table.
+        /// Get a reviewer by ID from the table.
         /// </summary>
         /// <param name="id">The ID of the reviewer.</param>
         /// <returns>The reviewer with the specified ID.</returns>
         [HttpGet("{id:int}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var reviewer = _context.Reviewers.Find(id);
+            var reviewer = await _context.Reviewers.FindAsync(id);
             if (reviewer == null)
             {
-                return NotFound(new { message = "Reviewer not found" });
+                return NotFound(new { message = "Korisnik nije pronađen" });
             }
             return Ok(reviewer);
         }
 
         /// <summary>
-        /// Create a new entry in the Reviewers table.
+        /// Create a new reviewer entry in the table.
         /// </summary>
         /// <param name="reviewer">The reviewer to create.</param>
         /// <returns>The created reviewer.</returns>
         [HttpPost]
-        public IActionResult Post([FromBody] Reviewer reviewer)
+        public async Task<IActionResult> Post([FromBody] Reviewer reviewer)
         {
-            if (reviewer == null)
+            if (reviewer == null || string.IsNullOrWhiteSpace(reviewer.Email) || string.IsNullOrWhiteSpace(reviewer.FirstName) || string.IsNullOrWhiteSpace(reviewer.LastName))
             {
-                return BadRequest(new { message = "Invalid data" });
+                return BadRequest(new { message = "Nema dovoljno podataka" });
             }
 
             _context.Reviewers.Add(reviewer);
-            _context.SaveChanges();
-            return StatusCode(StatusCodes.Status201Created, reviewer);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetById), new { id = reviewer.Id }, reviewer);
         }
 
         /// <summary>
-        /// Update an existing entry in the Reviewers table.
+        /// Update an existing reviewer entry in the table.
         /// </summary>
         /// <param name="id">The ID of the reviewer to update.</param>
         /// <param name="reviewer">The updated reviewer data.</param>
         /// <returns>A status indicating the result of the update.</returns>
         [HttpPut("{id:int}")]
         [Produces("application/json")]
-        public IActionResult Put(int id, [FromBody] Reviewer reviewer)
+        public async Task<IActionResult> Put(int id, [FromBody] Reviewer reviewer)
         {
-            if (reviewer == null)
+            if (reviewer == null || string.IsNullOrWhiteSpace(reviewer.Email) || string.IsNullOrWhiteSpace(reviewer.FirstName) || string.IsNullOrWhiteSpace(reviewer.LastName))
             {
-                return BadRequest(new { message = "Invalid data" });
+                return BadRequest(new { message = "Nema dovoljno podataka" });
             }
 
-            var existingReviewer = _context.Reviewers.Find(id);
+            var existingReviewer = await _context.Reviewers.FindAsync(id);
             if (existingReviewer == null)
             {
-                return NotFound(new { message = "Reviewer not found" });
+                return NotFound(new { message = "Korisnik nije pronađen" });
             }
 
-            existingReviewer.Name = reviewer.Name;
             existingReviewer.Email = reviewer.Email;
-            // Add other property updates as needed
+            existingReviewer.Pass = reviewer.Pass;
+            existingReviewer.FirstName = reviewer.FirstName;
+            existingReviewer.LastName = reviewer.LastName;
 
             _context.Reviewers.Update(existingReviewer);
-            _context.SaveChanges();
-            return Ok(new { message = "Successfully updated" });
+            await _context.SaveChangesAsync();
+            return Ok(new { message = "Uspješno promijenjeno" });
         }
 
         /// <summary>
-        /// Delete a row by ID from the Reviewers table.
+        /// Delete a reviewer by ID from the table.
         /// </summary>
         /// <param name="id">The ID of the reviewer to delete.</param>
         /// <returns>A status indicating the result of the delete operation.</returns>
         [HttpDelete("{id:int}")]
         [Produces("application/json")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var reviewer = _context.Reviewers.Find(id);
+            var reviewer = await _context.Reviewers.FindAsync(id);
             if (reviewer == null)
             {
-                return NotFound(new { message = "Reviewer not found" });
+                return NotFound(new { message = "Korisnik nije pronađen" });
             }
 
             _context.Reviewers.Remove(reviewer);
-            _context.SaveChanges();
-            return Ok(new { message = "Successfully deleted" });
+            await _context.SaveChangesAsync();
+            return Ok(new { message = "Uspješno obrisano" });
         }
-
-
-
     }
 }
