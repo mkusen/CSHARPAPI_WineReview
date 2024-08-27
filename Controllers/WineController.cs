@@ -2,6 +2,7 @@
 using CSHARPAPI_WineReview.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 
 namespace CSHARPAPI_WineReview.Controllers
 {
@@ -88,6 +89,7 @@ namespace CSHARPAPI_WineReview.Controllers
             existingWine.Maker = wine.Maker;
             existingWine.WineName = wine.WineName;
             existingWine.YearOfHarvest = wine.YearOfHarvest;
+          //decimal number needs to be in format "1.23" not "1,23" (needs to contain "."(dot) not ","(comma)
             existingWine.Price = wine.Price;
 
             _context.Wines.Update(existingWine);
