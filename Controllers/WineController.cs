@@ -1,5 +1,6 @@
 ﻿using CSHARPAPI_WineReview.Data;
 using CSHARPAPI_WineReview.Models;
+using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
@@ -112,8 +113,18 @@ namespace CSHARPAPI_WineReview.Controllers
                 return NotFound(new { message = "Vino nije pronađeno" });
             }
 
-            _context.Wines.Remove(wine);
-            await _context.SaveChangesAsync();
+            //unable to delete data - handle 500 internal server error
+            try
+            {
+                _context.Wines.Remove(wine);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                    new { message = "nije moguće brisanje, za vino je već napravljena recenzija" });
+            }
+            
             return Ok(new { message = "Uspješno obrisano" });
         }
     }

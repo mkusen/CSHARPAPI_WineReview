@@ -1,5 +1,6 @@
 ﻿using CSHARPAPI_WineReview.Data;
 using CSHARPAPI_WineReview.Models;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -74,7 +75,7 @@ namespace CSHARPAPI_WineReview.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> Put(int id, [FromBody] Reviewer reviewer)
         {
-            if (reviewer == null || string.IsNullOrWhiteSpace(reviewer.Email) || string.IsNullOrWhiteSpace(reviewer.FirstName) || string.IsNullOrWhiteSpace(reviewer.LastName))
+            if (reviewer == null || string.IsNullOrWhiteSpace(reviewer.FirstName) || string.IsNullOrWhiteSpace(reviewer.LastName))
             {
                 return BadRequest(new { message = "Nema dovoljno podataka" });
             }
@@ -85,7 +86,7 @@ namespace CSHARPAPI_WineReview.Controllers
                 return NotFound(new { message = "Korisnik nije pronađen" });
             }
 
-            existingReviewer.Email = reviewer.Email;
+           // existingReviewer.Email = reviewer.Email;
             existingReviewer.Pass = reviewer.Pass;
             existingReviewer.FirstName = reviewer.FirstName;
             existingReviewer.LastName = reviewer.LastName;
@@ -110,8 +111,18 @@ namespace CSHARPAPI_WineReview.Controllers
                 return NotFound(new { message = "Korisnik nije pronađen" });
             }
 
-            _context.Reviewers.Remove(reviewer);
-            await _context.SaveChangesAsync();
+            //unable to delete data - handle 500 internal server error
+            try
+            {
+                _context.Reviewers.Remove(reviewer);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                   new { message = "nije moguće obrisati, korisnik je napravio recenziju" });
+            }
+           
             return Ok(new { message = "Uspješno obrisano" });
         }
     }

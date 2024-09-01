@@ -49,23 +49,18 @@ insert into tastings (id_reviewer, id_wine, id_event_place, review, event_date) 
 
 --select * from tastings;
 
--- select t.id, r.firstname, r.lastname, e.place_name, e.city, event_date, wine_name, year_of_harvest from tastings as t join reviewers as r on t.id=r.id
--- join wines as w on t.id=w.id
--- join event_places as e on t.id=e.id
--- where t.id=3;
+select*from wines where maker like '%kr%';
 
--- select d.city, d.place_name, d.event_name, b.maker, b.wine_name, a.review from 
--- tastings a inner join wines b on b.id = a.id_wine 
--- inner join reviewers c on c.id = a.id_reviewer 
--- inner join event_places d on d.id = a.id_event_place 
--- where b.maker LIKE '%kr%';
+select d.city, d.place_name, d.event_name, b.id, b.maker, b.wine_name, b.year_of_harvest, a.review from 
+tastings a inner join wines b on b.id = a.id_wine 
+inner join reviewers c on c.id = a.id_reviewer 
+inner join event_places d on d.id = a.id_event_place 
+where b.maker LIKE '%kr%';
 
 select * from reviewers where id=2;
-select*from wines where  id=4;
+select * from wines where  id=4;
 select * from event_places where id=6;
-
 select * from tastings where id=13;
-
 
  select t.id, r.firstname, r.lastname, e.place_name, e.city, t.event_date, w.wine_name, w.maker, w.year_of_harvest, t.review, w.price from tastings as t 
  join reviewers as r on r.id =t.id_reviewer

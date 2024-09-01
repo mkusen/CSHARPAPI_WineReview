@@ -16,5 +16,6 @@ namespace CSHARPAPI_WineReview.Models
 
         [Column("event_date")]
         public DateTime EventDate { get; set; }
+
     }
 }

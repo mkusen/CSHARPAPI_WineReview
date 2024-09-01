@@ -109,8 +109,18 @@ namespace CSHARPAPI_WineReview.Controllers
                 return NotFound(new { message = "Unos nije pronađen" });
             }
 
-            _context.EventPlaces.Remove(eventPlace);
-            await _context.SaveChangesAsync();
+            //unable to delete data - handle 500 internal server error
+            try
+            {
+                _context.EventPlaces.Remove(eventPlace);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                    new { message = "nije moguće brisanje, mjesto je ocjenjeno" });
+            }
+
             return Ok(new { message = "Uspješno obrisano" });
         }
     }
