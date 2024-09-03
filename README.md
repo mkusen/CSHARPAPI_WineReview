@@ -1,0 +1,1 @@
+Aplikacija za ocjenivanje vina.  
