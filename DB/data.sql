@@ -1,10 +1,10 @@
-﻿insert into reviewers (email, pass, firstname, lastname) values ('kusen.mario@gmail.com', HASHBYTES('MD5', 'pass'), 'Mario', 'Kušen'), 
-('VedranaPavic@jourrapide.com', HASHBYTES('MD5', 'pass1'), 'Vedrana', 'Pavić'),
-('DankoMatic@armyspy.com', HASHBYTES('MD5', 'pass2'), 'Danko', 'Matić'),
-('LjudevitVarga@jourrapide.com', HASHBYTES('MD5', 'pass3'), 'Ljudevit', 'Varga'),
-('VedranPavlic@jourrapide.com', HASHBYTES('MD5', 'pass4'), 'Vedran', 'Pavlić'),
-('LorenaVukelic@dayrep.com', HASHBYTES('MD5', 'pass5'), 'Lorena', 'Vukelić'),
-('VanjaMaric@armyspy.com', HASHBYTES('MD5', 'pass6'), 'Vanja', 'Marić');
+﻿insert into reviewers (email, pass, firstname, lastname) values ('kusen.mario@gmail.com', 'pass', 'Mario', 'Kušen'), 
+('VedranaPavic@jourrapide.com', 'pass1', 'Vedrana', 'Pavić'),
+('DankoMatic@armyspy.com', 'pass2', 'Danko', 'Matić'),
+('LjudevitVarga@jourrapide.com','pass3', 'Ljudevit', 'Varga'),
+('VedranPavlic@jourrapide.com', 'pass4', 'Vedran', 'Pavlić'),
+('LorenaVukelic@dayrep.com', 'pass5', 'Lorena', 'Vukelić'),
+('VanjaMaric@armyspy.com', 'pass6', 'Vanja', 'Marić');
 
 --select * from reviewers;
 
