@@ -23,20 +23,25 @@ builder.Services.AddDbContext<WineReviewContext>(
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI(options => {
         options.ConfigObject.AdditionalItems.Add("requestSnippetsEnabled", true);
         options.EnableTryItOutByDefault();       
         
         });
-}
+//}
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+//for production
+app.UseStaticFiles();   
+app.UseDefaultFiles();
+app.MapFallbackToFile("index.html");
 
 app.Run();
