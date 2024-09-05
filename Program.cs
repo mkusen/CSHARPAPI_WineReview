@@ -20,12 +20,23 @@ builder.Services.AddDbContext<WineReviewContext>(
     
     );
 
+builder.Services.AddCors(opcije =>
+{
+    opcije.AddPolicy("CorsPolicy",
+        builder =>
+            builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+    );
+
+});
+
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{
-    app.UseSwagger();
+app.UseSwagger();
     app.UseSwaggerUI(options => {
         options.ConfigObject.AdditionalItems.Add("requestSnippetsEnabled", true);
         options.EnableTryItOutByDefault();       
@@ -43,5 +54,7 @@ app.MapControllers();
 app.UseStaticFiles();   
 app.UseDefaultFiles();
 app.MapFallbackToFile("index.html");
+
+app.UseCors("CorsPolicy");
 
 app.Run();
