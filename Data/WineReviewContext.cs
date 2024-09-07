@@ -15,5 +15,7 @@ namespace CSHARPAPI_WineReview.Data
         public  DbSet<Wine> Wines { get; set; }
         public DbSet<Tasting> Tastings { get; set; }
 
-    }
+       
+
+}
 }
