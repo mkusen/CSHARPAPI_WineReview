@@ -24,13 +24,14 @@ namespace CSHARPAPI_WineReview.Controllers
             while (top <= bottom && left <= right)
             {
 
-                // Popunjavanje donjeg reda zdesna nalijevo
+
+                // Popunjavanje reda zdesna nalijevo
                 if (top <= bottom)
                 {
                     for (int i = right; i >= left; i--)
                     {
                         // prvi broj
-                        if (num== 1)
+                        if (num == 1)
                         {
                             matrix[bottom, i] = new NumberWithDirectionModel
                             {
@@ -40,25 +41,43 @@ namespace CSHARPAPI_WineReview.Controllers
                                 Up = i == left,      // Gore false
                                 Down = false,        // Dolje false
                                 Color = "#FFFFFFFF",
-                                Position = "RTL"
+                                Position = "RTLfirst"
                             };
 
                         }
                         //ostali brojevi
                         else
                         {
-                            matrix[bottom, i] = new NumberWithDirectionModel
+
+                            if (num == cols * rows)
                             {
-                                Number = num++,
-                                Left = i != left,    // Lijevo true ako nije zadnji broj
-                                Right = true,  // Desno true ako nije prvi broj u redu
-                                Up = i == left,     // Gore true ako je zadnji u redu
-                                Down = false,        // Uvijek false
-                                Color = "#FF000000",
-                                Position = "RTL"
-                            };
+                                matrix[bottom, i] = new NumberWithDirectionModel
+                                {
+                                    Number = num++,
+                                    Left = i != left,    // Lijevo true ako nije zadnji broj
+                                    Right = true,  // Desno true ako nije prvi broj u redu
+                                    Up = false,     // Gore false za zadnji broj u nizu (umnožak redova i kolona)
+                                    Down = false,        // Uvijek false
+                                    Color = "#FF000000",
+                                    Position = "RTLlast"
+                                };
+                            }
+                            else
+                            {
+                                matrix[bottom, i] = new NumberWithDirectionModel
+                                {
+                                    Number = num++,
+                                    Left = i != left,    // Lijevo true ako nije zadnji broj
+                                    Right = true,  // Desno true ako nije prvi broj u redu
+                                    Up = i == left,     // Gore true ako je zadnji u redu
+                                    Down = false,        // Uvijek false
+                                    Color = "#FF000000",
+                                    Position = "RTL"
+                                };
+                            }
+                         
                         }
-                        
+
                     }
                     bottom--;
                 }
@@ -82,37 +101,66 @@ namespace CSHARPAPI_WineReview.Controllers
                     left++;
                 }
 
-                // Popunjavanje gornjeg reda slijeva nadesno
-                for (int i = left; i <= right; i++)
+                // Popunjavanje reda slijeva nadesno
+                if (top <= bottom)
                 {
-                    matrix[top, i] = new NumberWithDirectionModel
+                    for (int i = left; i <= right; i++)
                     {
-                        Number = num++,
-                        Left = true,            // Lijevo uvijek true
-                        Right = i != right,    // Desna strana samo ako nije zadnji broj
-                        Up = false,             //uvijek false
-                        Down = i == right,  // Dolje false ako nismo na zadnjem redu
-                        Color = "#FF000000",
-                        Position = "LTR"
-                    };
+                        if (num == rows * cols)
+                        {
+                            matrix[top, i] = new NumberWithDirectionModel
+                            {
+                                Number = num++,
+                                Left = true,            // Lijevo uvijek true
+                                Right = i != right,    // Desna strana samo ako nije zadnji broj
+                                Up = false,             //uvijek false
+                                Down = false,           //Dolje false za zadnji broj u nizu (umnožak redova i kolona)
+                                Color = "#FF000000",
+                                Position = "LTRlast"
+                            };
+
+                        }
+                        else
+                        {
+                            matrix[top, i] = new NumberWithDirectionModel
+                            {
+                                Number = num++,
+                                Left = true,            // Lijevo uvijek true
+                                Right = i != right,    // Desna strana samo ako nije zadnji broj
+                                Up = false,             //uvijek false
+                                Down = i == right,  // Dolje false ako nismo na zadnjem redu
+                                Color = "#FF000000",
+                                Position = "LTR"
+                            };
+
+                        }
+
+                    
+
+                    }
+                    top++;
                 }
-                top++;
+
 
                 // Popunjavanje desne kolone odozgo prema dolje
-                for (int i = top; i <= bottom; i++)
+                if (left <= right)
                 {
-                    matrix[i, right] = new NumberWithDirectionModel
+                    for (int i = top; i <= bottom; i++)
                     {
-                        Number = num++,
-                        Left = i == bottom,   // Lijevo ako nije posljednja kolona
-                        Right = false,          // Uvijek false, zadnja kolona
-                        Up = true,          // Uvijek true
-                        Down = i != bottom,     // Dolje ako nije zadnji broj
-                        Color = "#FF000000",
-                        Position = "down"
-                    };
+                        matrix[i, right] = new NumberWithDirectionModel
+                        {
+                            Number = num++,
+                            Left = i == bottom,   // Lijevo ako nije posljednja kolona
+                            Right = false,          // Uvijek false, zadnja kolona
+                            Up = true,          // Uvijek true
+                            Down = i != bottom,     // Dolje ako nije zadnji broj
+                            Color = "#FF000000",
+                            Position = "down"
+                        };
+                    }
+                    right--;
+
                 }
-                right--;
 
             }
 
