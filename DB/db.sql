@@ -7,7 +7,19 @@ go
 use wine_review;
 go
 
---alter DATABASE db_aace17_winereview collate Croatian_CI_AS; //use this command to alter collation on remote server DB
+
+--on remote server DB
+--SELECT name, collation_name FROM sys.databases;
+--GO
+--ALTER DATABASE db_aace17_winereview SET SINGLE_USER WITH
+--ROLLBACK IMMEDIATE;
+--GO
+--ALTER DATABASE db_aace17_winereview COLLATE Croatian_CI_AS;
+--GO
+--ALTER DATABASE db_aace17_winereview SET MULTI_USER;
+--GO
+--SELECT name, collation_name FROM sys.databases;
+--GO
 
 create table reviewers(
 id int not null primary key identity(1,1),
