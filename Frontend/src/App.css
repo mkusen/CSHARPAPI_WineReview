@@ -1,0 +1,25 @@
+.right{
+    text-align: right;
+}
+.center{
+    text-align: center;
+}
+.wide{
+    width: 100%;
+}
+.app{
+    min-height: 2%;
+}
+.copywright{
+    text-align: centar;
+    color: yellowgreen;  
+    position: relative;    
+}
+
+#root {
+    max-width: 1500px;
+    margin: auto;
+    padding: 2rem;
+    text-align: center;
+  }
+ 

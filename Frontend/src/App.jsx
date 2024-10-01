@@ -1,12 +1,11 @@
 
 import './App.css'
 import { Container } from 'react-bootstrap'
-import NavBarWineReview from './components/NavBarWineReview'
-import Start from './pages/Start'
-import Reviews from './pages/Reviews'
-import { Route, Routes } from 'react-router-dom'
-import { RoutesNames } from './constants'
+import NavBarWineReview from './components/NavBarWineReview';
+import ReviewCards from './components/ReviewCards';
 
+
+//this class loads app
 
 function App() {
 
@@ -21,22 +20,16 @@ function App() {
   
   return (
     <>
-    <Container className='App'>
-    <NavBarWineReview />
-     <Routes>
-        <Route path={RoutesNames.HOME} element={<Start />} />
-        <Route path={RoutesNames.REVIEWS} element={<Reviews />} />
-     </Routes>
+    <Container className='center'>  
+    <NavBarWineReview/> 
+    <ReviewCards /> 
     </Container>
-    <Container>
+    <Container className='copywright'>
       Wine review &copy; {year()}
     </Container>
      
     </>
-
   )
-
-
 }
 
 export default App

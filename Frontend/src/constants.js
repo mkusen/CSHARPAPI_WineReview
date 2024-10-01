@@ -2,7 +2,7 @@
 
 export const RoutesNames = {
     HOME: '/',
-    START: '/start',
+   
     REVIEWS: '/reviews',
 }
 
