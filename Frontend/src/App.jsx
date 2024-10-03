@@ -20,8 +20,9 @@ function App() {
   
   return (
     <>
+   
     <Container className='center'>  
-    <NavBarWineReview/> 
+    <NavBarWineReview/>
     <ReviewCards /> 
     </Container>
     <Container className='copywright'>

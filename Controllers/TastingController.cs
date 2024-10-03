@@ -1,34 +1,39 @@
 ﻿using CSHARPAPI_WineReview.Data;
 using CSHARPAPI_WineReview.Models;
+using CSHARPAPI_WineReview.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+using AutoMapper;
 
 namespace CSHARPAPI_WineReview.Controllers
 {
 
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class TastingController : ControllerBase
+    public class TastingController (WineReviewContext context, IMapper mapper) : WineReviewController(context, mapper)
     {
-
-        //dependency injection
-        private readonly WineReviewContext _context;
-        //constructor injection
-        public TastingController(WineReviewContext context)
-        {
-            _context = context;
-        }
 
         /// <summary>
         /// Get all tastings from the table.
         /// </summary>
         /// <returns>A list of tastings.</returns>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public ActionResult<List<TastingDTORead>> Get()
         {
-            var tastings = await _context.Tastings.ToListAsync();
-            return Ok(tastings);
+            if (!ModelState.IsValid) {
+                return BadRequest(new { message = ModelState + " if" });
+            
+            }
+            try
+            {
+                return Ok(_mapper.Map<List<TastingDTORead>>(context.Tastings.Include(t=>t.IdWine)));
+            }
+            catch (Exception e)
+            {
+
+         return BadRequest(new {message= e.Message + " catch"});   
+            }
+         
         }
 
 
@@ -42,7 +47,7 @@ namespace CSHARPAPI_WineReview.Controllers
         public async Task<IActionResult> GetById(int id)
         {
 
-            var tasting = await _context.Tastings.FindAsync(id);
+            var tasting = await context.Tastings.FindAsync(id);
             //tests if entry by ID exists
             if (tasting == null)
             {

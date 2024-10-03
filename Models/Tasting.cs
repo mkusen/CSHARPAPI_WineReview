@@ -4,14 +4,19 @@ namespace CSHARPAPI_WineReview.Models
 {
     public class Tasting : Entity
     {
+
+        [ForeignKey("id_reviewer")]
         [Column("id_reviewer")]
-        public int IdReviewer { get; set; }
+        
+        public required int IdReviewer { get; set; }
 
+        [ForeignKey("id_wine")]
         [Column("id_wine")]
-        public int IdWine { get; set; }
+        public required int IdWine { get; set; }
 
+        [ForeignKey("id_event_place")]
         [Column("id_event_place")]
-        public int IdEventPlace { get; set; }
+        public required int IdEventPlace { get; set; }
         public string? Review { get; set; }
 
         [Column("event_date")]

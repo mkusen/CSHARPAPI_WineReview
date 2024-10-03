@@ -8,15 +8,10 @@ namespace CSHARPAPI_WineReview.Controllers
    
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class EventPlacesController : ControllerBase
+    public class EventPlacesController(WineReviewContext context) : ControllerBase
     {
         // Dependency Injection
-        private readonly WineReviewContext _context;
-        // Constructor Injection
-        public EventPlacesController(WineReviewContext context)
-        {
-            _context = context;
-        }
+        private readonly WineReviewContext _context = context;
 
         /// <summary>
         /// Get all rows from the table.

@@ -6,4 +6,4 @@ export const RoutesNames = {
     REVIEWS: '/reviews',
 }
 
-export const BACKEND_URL = 'https://mkusen-001-site1.ktempurl.com/api/v1';
+export const BACKEND_URL = 'https://winereview.site/api/v1';

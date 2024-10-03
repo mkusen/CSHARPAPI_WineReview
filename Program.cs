@@ -1,4 +1,5 @@
 using CSHARPAPI_WineReview.Data;
+using CSHARPAPI_WineReview.Mapping;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,9 @@ builder.Services.AddCors(opcije =>
     );
 
 });
+
+// automapper
+builder.Services.AddAutoMapper(typeof(WineReviewMappingProfile));
 
 var app = builder.Build();
 
