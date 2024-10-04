@@ -12,8 +12,8 @@ namespace CSHARPAPI_WineReview.Mapping
 
             CreateMap<Tasting, TastingDTORead>()
                 .ForMember(
-                dest=>dest.Email,
-                opt=>opt.MapFrom(src=>src.IdReviewer)
+                dest => dest.Email,
+                opt => opt.MapFrom(src => src.IdReviewer)
                 );
             CreateMap<Tasting, TastingDTOInsertUpdate>().ForMember(
                 dest=>dest.Email,
@@ -24,6 +24,7 @@ namespace CSHARPAPI_WineReview.Mapping
             CreateMap<TastingDTOInsertUpdate, Tasting>();
         
         
-        }   
+        }
+
     }
 }

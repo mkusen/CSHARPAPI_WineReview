@@ -21,9 +21,9 @@ builder.Services.AddDbContext<WineReviewContext>(
     
     );
 
-builder.Services.AddCors(opcije =>
+builder.Services.AddCors(options =>
 {
-    opcije.AddPolicy("CorsPolicy",
+    options.AddPolicy("CorsPolicy",
         builder =>
             builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
     );
@@ -60,5 +60,6 @@ app.UseDefaultFiles();
 app.MapFallbackToFile("index.html");
 
 app.UseCors("CorsPolicy");
+//end for production
 
 app.Run();

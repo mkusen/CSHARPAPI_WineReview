@@ -21,17 +21,27 @@ namespace CSHARPAPI_WineReview.Controllers
         public ActionResult<List<TastingDTORead>> Get()
         {
             if (!ModelState.IsValid) {
-                return BadRequest(new { message = ModelState + " if" });
+                return BadRequest(new { message = ModelState});
             
             }
             try
             {
-                return Ok(_mapper.Map<List<TastingDTORead>>(context.Tastings.Include(t=>t.IdWine)));
+                // DB query for retrive data
+                var tastings = _context.Tastings.Include(t => t.Reviewer).ToList();
+
+                // result mapped to DTO
+
+                var tastingDTO = _mapper.Map<List<TastingDTORead>>(tastings);
+
+                return tastingDTO;
+
+
+
             }
             catch (Exception e)
             {
 
-         return BadRequest(new {message= e.Message + " catch"});   
+         return BadRequest(new {message= e.Message});   
             }
          
         }
@@ -55,15 +65,15 @@ namespace CSHARPAPI_WineReview.Controllers
             }
 
             //get reviewer data
-            var idReviewer = tasting.IdReviewer;
+            var idReviewer = tasting.Reviewer.Id;
             var reviewer = await _context.Reviewers.FindAsync(idReviewer);
 
             //get event data
-            var idEventPlace = tasting.IdEventPlace;
+            var idEventPlace = tasting.EventPlace.Id;
             var place = await _context.EventPlaces.FindAsync(idEventPlace);
 
             // get wine data
-            var idWine = tasting.IdWine;
+            var idWine = tasting.Wine.Id;
             var wine = await _context.Wines.FindAsync(idWine);
 
             //json with data is created here
@@ -100,7 +110,7 @@ namespace CSHARPAPI_WineReview.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Tasting tasting)
         {
-            if (tasting == null || tasting.IdEventPlace == 0 || tasting.IdWine == 0 || tasting.IdReviewer == 0 || string.IsNullOrEmpty(tasting.Review))
+            if (tasting == null || tasting.EventPlace.Id == 0 || tasting.Wine.Id == 0 || tasting.Reviewer.Id == 0 || string.IsNullOrEmpty(tasting.Review))
             {
                 return BadRequest(new { message = "Nema dovoljno podataka" });
             }
@@ -120,7 +130,7 @@ namespace CSHARPAPI_WineReview.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> Put(int id, [FromBody] Tasting tasting)
         {
-            if (tasting == null || tasting.IdEventPlace == 0 || tasting.IdWine == 0 || tasting.IdReviewer == 0 || string.IsNullOrEmpty(tasting.Review))
+            if (tasting == null || tasting.EventPlace.Id == 0 || tasting.Wine.Id == 0 || tasting.Reviewer.Id == 0 || string.IsNullOrEmpty(tasting.Review))
             {
                 return BadRequest(new { message = "Nema dovoljno podataka" });
             }
@@ -131,9 +141,9 @@ namespace CSHARPAPI_WineReview.Controllers
                 return NotFound(new { message = "Podatak nije pronađen" });
             }
 
-            existingTasting.IdReviewer = tasting.IdReviewer;
-            existingTasting.IdEventPlace = tasting.IdEventPlace;
-            existingTasting.IdWine = tasting.IdWine;
+            existingTasting.Reviewer.Id = tasting.Reviewer.Id;
+            existingTasting.EventPlace.Id = tasting.EventPlace.Id;
+            existingTasting.Wine.Id = tasting.Wine.Id;
             existingTasting.Review = tasting.Review;
             existingTasting.EventDate = tasting.EventDate;
 

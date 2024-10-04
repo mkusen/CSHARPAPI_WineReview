@@ -11,5 +11,8 @@ namespace CSHARPAPI_WineReview.Models
         [Column("year_of_harvest")]
         public string? YearOfHarvest { get; set; }
         public decimal? Price { get; set; }
+
+       
+
     }
 }

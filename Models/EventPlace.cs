@@ -12,5 +12,7 @@ namespace CSHARPAPI_WineReview.Models
         public string? PlaceName { get; set; }
         [Column("event_name")]
         public string? EventName { get; set; }
+
+       
     }
 }
