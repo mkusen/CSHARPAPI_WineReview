@@ -6,11 +6,12 @@ namespace CSHARPAPI_WineReview.Models.DTO
     (
 
         int Id,
-        string? Country,
-        string? City,
-        string? PlaceName,
+        string Country,
+        string City,
+        string PlaceName,
         string? EventName
 
 
     );
+    
 }

@@ -15,13 +15,13 @@ namespace CSHARPAPI_WineReview.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //relation 1:n for table wine
-            modelBuilder.Entity<Tasting>().HasOne(w => w.Wine).WithMany().HasForeignKey(w => w.IdWine);
+            modelBuilder.Entity<Tasting>().HasOne(w => w.Wine);
 
             //relation 1:n for table reviewer
-            modelBuilder.Entity<Tasting>().HasOne(r => r.Reviewer).WithMany().HasForeignKey(r => r.IdReviewer);
+            modelBuilder.Entity<Tasting>().HasOne(r => r.Reviewer);
 
             //relation 1:n for table event_place
-            modelBuilder.Entity<Tasting>().HasOne(e=>e.EventPlace).WithMany().HasForeignKey(e => e.IdEventPlace);
+            modelBuilder.Entity<Tasting>().HasOne(e=>e.EventPlace);
 
         }
 

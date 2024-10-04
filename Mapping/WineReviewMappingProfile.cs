@@ -9,18 +9,20 @@ namespace CSHARPAPI_WineReview.Mapping
         public WineReviewMappingProfile() 
         {
             //mapping creation for TastingController: source, destination
-
+            //potrebno dodati još ostale podatke 
             CreateMap<Tasting, TastingDTORead>()
                 .ForMember(
-                dest => dest.Email,
-                opt => opt.MapFrom(src => src.IdReviewer)
+                dest => dest.WineName,
+                opt => opt.MapFrom(src => src.Wine.WineName)
+                )
+                .ForMember(
+                dest => dest.Reviewer,
+                opt => opt.MapFrom(src => src.Reviewer.FirstName + " " + src.Reviewer.LastName)
+                ).ForMember(
+                dest => dest.Reviewer,
+                opt => opt.MapFrom(src => src.Reviewer.Email)
                 );
-            CreateMap<Tasting, TastingDTOInsertUpdate>().ForMember(
-                dest=>dest.Email,
-                opt=>opt.MapFrom(src=>src.IdReviewer)
-                
-                
-              );
+        
             CreateMap<TastingDTOInsertUpdate, Tasting>();
         
         
