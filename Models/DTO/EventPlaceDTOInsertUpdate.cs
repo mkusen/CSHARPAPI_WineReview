@@ -6,10 +6,12 @@ namespace CSHARPAPI_WineReview.Models.DTO
     (
     [Required(ErrorMessage ="Obavezno polje")]
     string Country,
+    [Required(ErrorMessage ="Obavezno polje")]
     string City,
+    [Required(ErrorMessage ="Obavezno polje")]
     string PlaceName,
 
-        string EventName
+        string? EventName
         
     );
 }

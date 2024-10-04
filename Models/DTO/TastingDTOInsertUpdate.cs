@@ -5,11 +5,15 @@ namespace CSHARPAPI_WineReview.Models.DTO
     public record TastingDTOInsertUpdate
     (
         [Required(ErrorMessage = "Obavezno polje")]
-        string Email,
+        DateTime EventDate,
         [Required(ErrorMessage = "Obavezno polje")]
-        string FirstName,
+        int Wine,
         [Required(ErrorMessage = "Obavezno polje")]
-        string LastName
+        int EventPlace,
+        [Required(ErrorMessage ="Obavezno polje")]
+        int Reviewer,
+
+        string? Review
 
         );
         

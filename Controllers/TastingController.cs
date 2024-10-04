@@ -28,14 +28,18 @@ namespace CSHARPAPI_WineReview.Controllers
             {
                 // DB query for retrive data
                 var tastings = _context.Tastings
-                    .Include(t => t.Reviewer)
-                    .Include(t => t.EventPlace)
-                    .Include(t => t.Wine)
+                    .Include(r => r.Reviewer)
+                    .Include(e => e.EventPlace)
+                    .Include(w => w.Wine)
                     .ToList();
+
+
 
                 // result mapped to DTO
 
                 var tastingDTO = _mapper.Map<List<TastingDTORead>>(tastings);
+
+                Console.WriteLine(tastingDTO);
 
                 return tastingDTO;
 

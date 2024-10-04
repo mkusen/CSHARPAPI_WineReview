@@ -5,7 +5,8 @@
             int Id,
             string Maker,
             string WineName,
-            string YearOfHarvest
+            string YearOfHarvest,
+        decimal? Price
 
         );
     
