@@ -13,7 +13,7 @@
             string WineName,
             //event_places by FK 'id_event_place' taken from 'event_places' table
     
-            string? EventName
+            string EventName
 
         );
      

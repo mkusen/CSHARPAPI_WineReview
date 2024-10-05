@@ -26,20 +26,16 @@ namespace CSHARPAPI_WineReview.Controllers
             }
             try
             {
-                // DB query for retrive data
+                // DB query for retrieve data
                 var tastings = _context.Tastings
                     .Include(r => r.Reviewer)
                     .Include(e => e.EventPlace)
                     .Include(w => w.Wine)
                     .ToList();
 
-
-
                 // result mapped to DTO
 
                 var tastingDTO = _mapper.Map<List<TastingDTORead>>(tastings);
-
-                Console.WriteLine(tastingDTO);
 
                 return tastingDTO;
 
@@ -60,51 +56,39 @@ namespace CSHARPAPI_WineReview.Controllers
         /// <returns>The tasting with the specified ID.</returns>
         [HttpGet("{id:int}")]
         [Produces("application/json")]
-        public async Task<IActionResult> GetById(int id)
+        public ActionResult<List<TastingDTORead>> GetById(int id)
         {
-
-            var tasting = await context.Tastings.FindAsync(id);
-            //tests if entry by ID exists
-            if (tasting == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound(new { message = "Podatak nije pronađen" });
+                return BadRequest(new { message = ModelState });
+
             }
 
-            //get reviewer data
-            var idReviewer = tasting.Reviewer.Id;
-            var reviewer = await _context.Reviewers.FindAsync(idReviewer);
+           
+            try
+            {
+                // DB query for retrieve data
+                var tasting = _context.Tastings.FindAsync(id);
+                 /*.Include(r => r.Reviewer)
+                    .Include(e => e.EventPlace)
+                    .Include(w => w.Wine)
+                .ToList();
+                 */
 
-            //get event data
-            var idEventPlace = tasting.EventPlace.Id;
-            var place = await _context.EventPlaces.FindAsync(idEventPlace);
+                // result mapped to DTO
 
-            // get wine data
-            var idWine = tasting.Wine.Id;
-            var wine = await _context.Wines.FindAsync(idWine);
+                var tastingDTO = _mapper.Map<List<TastingDTORead>>(tasting);
 
-            //json with data is created here
-            var collectedData = new
+              
+
+                return tastingDTO;
+
+            }
+            catch (Exception e)
             {
 
-                id = tasting.Id,
-                idReviewer = reviewer.Id,
-                firstName = reviewer.FirstName,
-                lastName = reviewer.LastName,
-                email = reviewer.Email,
-                idEventPlace = place.Id,
-                eventPlace = place.PlaceName,
-                city = place.City,
-                idWine = wine.Id,
-                maker = wine.Maker,
-                wineName = wine.WineName,
-                year = wine.YearOfHarvest,
-                price = wine.Price,
-                review = tasting.Review,
-                eventDate = tasting.EventDate
-
-            };
-
-            return Ok(collectedData);
+                return BadRequest(new { message = e.Message });
+            }
 
         }
 

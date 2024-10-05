@@ -9,7 +9,7 @@ namespace CSHARPAPI_WineReview.Mapping
         public WineReviewMappingProfile() 
         {
             //mapping creation for TastingController: source, destination
-            //potrebno dodati još ostale podatke 
+            //kada se koristi .ForCtorParam, potrebno je da broj svojstava (property) u osnovnoj i DTO klasi bude jednak
             CreateMap<Tasting, TastingDTORead>()
                  .ForCtorParam("WineName",
                 opt => opt.MapFrom(src => src.Wine.WineName + " " + src.Wine.Maker + " " + src.Wine.YearOfHarvest + " " + src.Wine.Price))
@@ -17,25 +17,19 @@ namespace CSHARPAPI_WineReview.Mapping
                 opt => opt.MapFrom(src => src.Reviewer.FirstName + " " + src.Reviewer.LastName))
                 .ForCtorParam("EventName",
                 opt => opt.MapFrom(src => src.EventPlace.Country + " " + src.EventPlace.City + " " + src.EventPlace.PlaceName + " " + src.EventPlace.EventName));
+            CreateMap<TastingDTOInsertUpdate, Tasting>();
+
+            CreateMap<Wine, WineDTORead>();
+            CreateMap<WineDTOInsertUpdate, Wine>();
+
+            CreateMap<Reviewer, ReviewerDTORead>();
+            CreateMap<ReviewerDTOInsertUpdate, Reviewer>();
+
+            CreateMap<EventPlace, EventPlaceDTORead>(); 
+            CreateMap<EventPlaceDTOInsertUpdate, EventPlace>(); 
                
 
 
-
-
-            //.ForCtorParam(
-            //"WineName",
-            //opt => opt.MapFrom(src => src.Wine.WineName)
-            //);
-            //.ForCtorParam(
-            //"Reviewer",
-            //opt => opt.MapFrom(src => src.Reviewer.FirstName + " " + src.Reviewer.LastName)
-            //).ForCtorParam(
-            //"Reviewer",
-            //opt => opt.MapFrom(src => src.Reviewer.Email)
-            //);
-
-            CreateMap<TastingDTOInsertUpdate, Tasting>();
-        
         
         }
 
