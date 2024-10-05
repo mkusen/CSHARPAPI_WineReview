@@ -68,12 +68,13 @@ namespace CSHARPAPI_WineReview.Controllers
             try
             {
                 // DB query for retrieve data
-                var tasting = _context.Tastings.FindAsync(id);
-                 /*.Include(r => r.Reviewer)
+                var tasting = _context.Tastings.FindAsync(id)
+                 .Include(r => r.Reviewer)
                     .Include(e => e.EventPlace)
                     .Include(w => w.Wine)
+                    
                 .ToList();
-                 */
+                 
 
                 // result mapped to DTO
 
