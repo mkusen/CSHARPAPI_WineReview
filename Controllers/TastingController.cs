@@ -1,16 +1,16 @@
-﻿using CSHARPAPI_WineReview.Data;
+﻿using AutoMapper;
+using CSHARPAPI_WineReview.Data;
 using CSHARPAPI_WineReview.Models;
 using CSHARPAPI_WineReview.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
 
 namespace CSHARPAPI_WineReview.Controllers
 {
 
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class TastingController (WineReviewContext context, IMapper mapper) : WineReviewController(context, mapper)
+    public class TastingController(WineReviewContext context, IMapper mapper) : WineReviewController(context, mapper)
     {
 
         /// <summary>
@@ -20,9 +20,10 @@ namespace CSHARPAPI_WineReview.Controllers
         [HttpGet]
         public ActionResult<List<TastingDTORead>> Get()
         {
-            if (!ModelState.IsValid) {
-                return BadRequest(new { message = ModelState});
-            
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { message = ModelState });
+
             }
             try
             {
@@ -34,18 +35,14 @@ namespace CSHARPAPI_WineReview.Controllers
                     .ToList();
 
                 // result mapped to DTO
-
-                var tastingDTO = _mapper.Map<List<TastingDTORead>>(tastings);
-
-                return tastingDTO;
-
+                return _mapper.Map<List<TastingDTORead>>(tastings);
             }
             catch (Exception e)
             {
 
-         return BadRequest(new {message= e.Message});   
+                return BadRequest(new { message = e.Message });
             }
-         
+
         }
 
 
@@ -56,41 +53,33 @@ namespace CSHARPAPI_WineReview.Controllers
         /// <returns>The tasting with the specified ID.</returns>
         [HttpGet("{id:int}")]
         [Produces("application/json")]
-        public ActionResult<List<TastingDTORead>> GetById(int id)
+        public ActionResult<TastingDTORead> GetById(int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(new { message = ModelState });
-
             }
 
-           
+            Tasting? e;
             try
             {
-                // DB query for retrieve data
-                var tasting = _context.Tastings.FindAsync(id)
+                // DB query for retrieve data by ID
+                e = _context.Tastings
                  .Include(r => r.Reviewer)
                     .Include(e => e.EventPlace)
                     .Include(w => w.Wine)
-                    
-                .ToList();
-                 
-
-                // result mapped to DTO
-
-                var tastingDTO = _mapper.Map<List<TastingDTORead>>(tasting);
-
-              
-
-                return tastingDTO;
-
+                    .FirstOrDefault(t => t.Id == id);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-                return BadRequest(new { message = e.Message });
+                return BadRequest(new { message = ex.Message });
             }
-
+            if (e == null)
+            {
+                return NotFound(new { message = "Recenzija ne postoji" });
+            }
+            // result mapped to DTO
+            return _mapper.Map<TastingDTORead>(e);
         }
 
         /// <summary>

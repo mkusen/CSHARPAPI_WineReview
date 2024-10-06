@@ -12,6 +12,6 @@ namespace CSHARPAPI_WineReview.Models.DTO
     string PlaceName,
 
         string? EventName
-        
+
     );
 }

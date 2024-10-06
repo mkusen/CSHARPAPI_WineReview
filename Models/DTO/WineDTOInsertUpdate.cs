@@ -11,12 +11,10 @@ namespace CSHARPAPI_WineReview.Models.DTO
          [Required(ErrorMessage ="Obavezno polje")]
             string YearOfHarvest,
 
-        decimal? Price
-
-
+           decimal? Price
 
         );
-       
 
-    
+
+
 }

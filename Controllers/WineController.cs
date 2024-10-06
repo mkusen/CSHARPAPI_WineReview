@@ -1,9 +1,7 @@
 ﻿using CSHARPAPI_WineReview.Data;
 using CSHARPAPI_WineReview.Models;
-using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Text.RegularExpressions;
 
 namespace CSHARPAPI_WineReview.Controllers
 {
@@ -90,7 +88,7 @@ namespace CSHARPAPI_WineReview.Controllers
             existingWine.Maker = wine.Maker;
             existingWine.WineName = wine.WineName;
             existingWine.YearOfHarvest = wine.YearOfHarvest;
-          //decimal number needs to be in format "1.23" not "1,23" (needs to contain "."(dot) not ","(comma)
+            //decimal number needs to be in format "1.23" not "1,23" (needs to contain "."(dot) not ","(comma)
             existingWine.Price = wine.Price;
 
             _context.Wines.Update(existingWine);
@@ -121,10 +119,10 @@ namespace CSHARPAPI_WineReview.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, 
+                return StatusCode(StatusCodes.Status500InternalServerError,
                     new { message = "nije moguće brisanje, za vino je već napravljena recenzija" });
             }
-            
+
             return Ok(new { message = "Uspješno obrisano" });
         }
     }

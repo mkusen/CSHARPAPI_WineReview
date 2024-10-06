@@ -1,12 +1,11 @@
 ﻿using CSHARPAPI_WineReview.Data;
 using CSHARPAPI_WineReview.Models;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSHARPAPI_WineReview.Controllers
 {
-    
+
 
     [ApiController]
     [Route("api/v1/[controller]")]
@@ -86,7 +85,7 @@ namespace CSHARPAPI_WineReview.Controllers
                 return NotFound(new { message = "Korisnik nije pronađen" });
             }
 
-           // existingReviewer.Email = reviewer.Email;
+            // existingReviewer.Email = reviewer.Email;
             existingReviewer.Pass = reviewer.Pass;
             existingReviewer.FirstName = reviewer.FirstName;
             existingReviewer.LastName = reviewer.LastName;
@@ -119,10 +118,10 @@ namespace CSHARPAPI_WineReview.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, 
+                return StatusCode(StatusCodes.Status500InternalServerError,
                    new { message = "nije moguće obrisati, korisnik je napravio recenziju" });
             }
-           
+
             return Ok(new { message = "Uspješno obrisano" });
         }
     }

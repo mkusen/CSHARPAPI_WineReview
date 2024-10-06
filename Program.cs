@@ -15,10 +15,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<WineReviewContext>(
 
-    options => {
+    options =>
+    {
         options.UseSqlServer(builder.Configuration.GetConnectionString("WineReviewContext"));
     }
-    
+
     );
 
 builder.Services.AddCors(options =>
@@ -41,11 +42,12 @@ var app = builder.Build();
 //if (app.Environment.IsDevelopment())
 //{
 app.UseSwagger();
-    app.UseSwaggerUI(options => {
-        options.ConfigObject.AdditionalItems.Add("requestSnippetsEnabled", true);
-        options.EnableTryItOutByDefault();       
-        
-        });
+app.UseSwaggerUI(options =>
+{
+    options.ConfigObject.AdditionalItems.Add("requestSnippetsEnabled", true);
+    options.EnableTryItOutByDefault();
+
+});
 //}
 
 app.UseHttpsRedirection();
@@ -55,7 +57,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 //for production
-app.UseStaticFiles();   
+app.UseStaticFiles();
 app.UseDefaultFiles();
 app.MapFallbackToFile("index.html");
 

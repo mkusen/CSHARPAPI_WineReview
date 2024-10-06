@@ -2,7 +2,7 @@
 
 namespace CSHARPAPI_WineReview.Models
 {
-    public class Wine:Entity    
+    public class Wine : Entity
     {
         public required string Maker { get; set; }
 
@@ -11,8 +11,6 @@ namespace CSHARPAPI_WineReview.Models
         [Column("year_of_harvest")]
         public required string YearOfHarvest { get; set; }
         public decimal? Price { get; set; }
-
-       
 
     }
 }

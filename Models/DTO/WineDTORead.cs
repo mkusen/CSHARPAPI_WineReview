@@ -6,8 +6,8 @@
             string Maker,
             string WineName,
             string YearOfHarvest,
-        decimal? Price
+            decimal? Price
 
         );
-    
+
 }

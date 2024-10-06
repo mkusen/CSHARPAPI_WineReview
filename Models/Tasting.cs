@@ -10,15 +10,16 @@ namespace CSHARPAPI_WineReview.Models
         [Column("event_date")]
         public required DateTime EventDate { get; set; }
 
-
         [ForeignKey("id_wine")]
-        public required Wine Wine { get; set; }
-
-        [ForeignKey("id_event_place")]
-        public required EventPlace EventPlace { get; set; }
+        public required Wine Wine { get; set; }   // Navigation property
 
         [ForeignKey("id_reviewer")]
-        public required Reviewer Reviewer { get; set; } 
+        public required Reviewer Reviewer { get; set; }  // Navigation property
+
+        [ForeignKey("id_event_place")]
+        public required EventPlace EventPlace { get; set; }  // Navigation property
+
+
 
     }
 }

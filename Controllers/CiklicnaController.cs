@@ -75,7 +75,7 @@ namespace CSHARPAPI_WineReview.Controllers
                                     Position = "RTL"
                                 };
                             }
-                         
+
                         }
 
                     }
@@ -135,7 +135,7 @@ namespace CSHARPAPI_WineReview.Controllers
 
                         }
 
-                    
+
 
                     }
                     top++;

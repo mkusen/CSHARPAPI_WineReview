@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSHARPAPI_WineReview.Controllers
 {
-   
+
     [ApiController]
     [Route("api/v1/[controller]")]
     public class EventPlacesController(WineReviewContext context) : ControllerBase
@@ -112,7 +112,7 @@ namespace CSHARPAPI_WineReview.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, 
+                return StatusCode(StatusCodes.Status500InternalServerError,
                     new { message = "nije moguće brisanje, mjesto je ocjenjeno" });
             }
 

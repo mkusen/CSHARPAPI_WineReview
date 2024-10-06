@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace CSHARPAPI_WineReview.Models.DTO
+﻿namespace CSHARPAPI_WineReview.Models.DTO
 {
     public record EventPlaceDTORead
     (
@@ -13,5 +11,5 @@ namespace CSHARPAPI_WineReview.Models.DTO
 
 
     );
-    
+
 }

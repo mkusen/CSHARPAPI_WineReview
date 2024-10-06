@@ -7,19 +7,19 @@ namespace CSHARPAPI_WineReview.Models.DTO
         [Required(ErrorMessage = "Obavezno polje")]
         DateTime EventDate,
         [Required(ErrorMessage = "Obavezno polje")]
-        int Wine,
+        int WineId,
         [Required(ErrorMessage = "Obavezno polje")]
-        int EventPlace,
+        int EventId,
         [Required(ErrorMessage ="Obavezno polje")]
-        int Reviewer,
+        int ReviewerId,
 
         string? Review
 
         );
-        
 
 
 
 
-    
+
+
 }
