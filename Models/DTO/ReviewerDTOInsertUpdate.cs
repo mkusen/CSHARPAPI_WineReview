@@ -9,8 +9,9 @@ namespace CSHARPAPI_WineReview.Models.DTO
         [Required(ErrorMessage ="Obavezno polje")]
         string FirstName,
         [Required(ErrorMessage ="Obavezno polje")]
-        string LastName
-
+        string LastName,
+        [Required(ErrorMessage ="Obavezno polje")]
+        string Pass
         );
 
 

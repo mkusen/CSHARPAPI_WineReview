@@ -14,7 +14,6 @@ namespace CSHARPAPI_WineReview.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             //relation 1:n for table wine
             modelBuilder.Entity<Tasting>().HasOne(w=>w.Wine);
             
@@ -24,24 +23,7 @@ namespace CSHARPAPI_WineReview.Data
             //relation 1:n for table event_place
             modelBuilder.Entity<Tasting>().HasOne(e => e.EventPlace);
 
-
-            /*
-            //relation n:n for table wine get by ID
-            modelBuilder.Entity<Tasting>().HasOne(w => w.Wine).
-                WithMany(t=>t.Tastings).HasForeignKey(t=>t.Wine.Id);
-
-            //relation n:n for table reviewer get by ID
-            modelBuilder.Entity<Tasting>().HasOne(r => r.Reviewer).
-                WithMany(t=>t.Tastings).HasForeignKey(t=>t.Reviewer.Id);
-
-            //relation n:n for table event_place get by ID
-            modelBuilder.Entity<Tasting>().HasOne(e => e.EventPlace).
-                WithMany(t=>t.Tastings).HasForeignKey(t=>t.EventPlace.Id);
-            */
-
         }
-
-
 
     }
 }

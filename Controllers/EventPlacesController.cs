@@ -1,5 +1,7 @@
-﻿using CSHARPAPI_WineReview.Data;
+﻿using AutoMapper;
+using CSHARPAPI_WineReview.Data;
 using CSHARPAPI_WineReview.Models;
+using CSHARPAPI_WineReview.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,20 +10,29 @@ namespace CSHARPAPI_WineReview.Controllers
 
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class EventPlacesController(WineReviewContext context) : ControllerBase
+    // Dependency Injection
+    public class EventPlacesController(WineReviewContext context, IMapper mapper) : WineReviewController(context, mapper)
     {
-        // Dependency Injection
-        private readonly WineReviewContext _context = context;
-
+    
         /// <summary>
         /// Get all rows from the table.
         /// </summary>
         /// <returns>A list of event places.</returns>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public ActionResult<List<EventPlaceDTORead>> Get()
         {
-            var eventPlaces = await _context.EventPlaces.ToListAsync();
-            return Ok(eventPlaces);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { message = ModelState });
+            }
+            try
+            {
+                return Ok(_mapper.Map<List<EventPlaceDTORead>>(_context.EventPlaces));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         /// <summary>
@@ -30,14 +41,29 @@ namespace CSHARPAPI_WineReview.Controllers
         /// <param name="id">The ID of the event place.</param>
         /// <returns>The event place with the specified ID.</returns>
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById(int id)
+        public ActionResult<List<EventPlaceDTORead>> GetById(int id)
         {
-            var eventPlace = await _context.EventPlaces.FindAsync(id);
-            if (eventPlace == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound(new { message = "Unos nije pronađen" });
+                return BadRequest(new { message = ModelState });
             }
-            return Ok(eventPlace);
+
+            EventPlace? e;
+            try
+            {
+                e = _context.EventPlaces.FirstOrDefault(e => e.Id == id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            if (e == null)
+            {
+                return NotFound(new { message = "Događaj ne postoji u bazi" });
+            }
+
+            return Ok(_mapper.Map<EventPlaceDTORead>(e));
+
         }
 
         /// <summary>
@@ -46,16 +72,29 @@ namespace CSHARPAPI_WineReview.Controllers
         /// <param name="eventPlace">The event place to create.</param>
         /// <returns>The created event place.</returns>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] EventPlace eventPlace)
+        public IActionResult Post(EventPlaceDTOInsertUpdate dto)
         {
-            if (eventPlace == null || string.IsNullOrWhiteSpace(eventPlace.PlaceName) || string.IsNullOrWhiteSpace(eventPlace.EventName))
+            if (!ModelState.IsValid)
             {
-                return BadRequest(new { message = "Nema dovoljno podataka" });
+                return BadRequest(new { message = ModelState });
             }
 
-            _context.EventPlaces.Add(eventPlace);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetById), new { id = eventPlace.Id }, eventPlace);
+            EventPlace? e;
+
+            //creates new entry in EventPlace table
+            try
+            {
+
+                e = _mapper.Map<EventPlace>(dto);
+                _context.EventPlaces.Add(e);
+                
+                _context.SaveChanges();
+                return StatusCode(StatusCodes.Status201Created, _mapper.Map<EventPlace>(e));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         /// <summary>
@@ -66,27 +105,29 @@ namespace CSHARPAPI_WineReview.Controllers
         /// <returns>A status indicating the result of the update.</returns>
         [HttpPut("{id:int}")]
         [Produces("application/json")]
-        public async Task<IActionResult> Put(int id, [FromBody] EventPlace eventPlace)
+        public IActionResult Put(int id, EventPlaceDTOInsertUpdate dto)
         {
-            if (eventPlace == null || string.IsNullOrWhiteSpace(eventPlace.PlaceName) || string.IsNullOrWhiteSpace(eventPlace.EventName))
+            if (!ModelState.IsValid)
             {
-                return BadRequest(new { message = "Nema dovoljno podataka" });
+                return BadRequest(new { message = ModelState });
             }
 
-            var existingEventPlace = await _context.EventPlaces.FindAsync(id);
-            if (existingEventPlace == null)
+            EventPlace? e;
+            //updates existing entry retrieve by ID in EventPlace table
+            try
             {
-                return NotFound(new { message = "Unos nije pronađen" });
+                e = _context.EventPlaces.FirstOrDefault(e => e.Id == id);
             }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            e = _mapper.Map(dto, e);
+            _context.EventPlaces.Update(e);
 
-            existingEventPlace.Country = eventPlace.Country;
-            existingEventPlace.City = eventPlace.City;
-            existingEventPlace.PlaceName = eventPlace.PlaceName;
-            existingEventPlace.EventName = eventPlace.EventName;
+            _context.SaveChanges();
+            return StatusCode(StatusCodes.Status201Created, new { message = "Uspješno promijenjeno", eventplace = _mapper.Map<EventPlace>(e) });
 
-            _context.EventPlaces.Update(existingEventPlace);
-            await _context.SaveChangesAsync();
-            return Ok(new { message = "Uspješno promijenjeno" });
         }
 
         /// <summary>

@@ -10,6 +10,8 @@ namespace CSHARPAPI_WineReview.Controllers
 
     [ApiController]
     [Route("api/v1/[controller]")]
+
+    //dependency injection
     public class TastingController(WineReviewContext context, IMapper mapper) : WineReviewController(context, mapper)
     {
 
@@ -60,11 +62,11 @@ namespace CSHARPAPI_WineReview.Controllers
                 return BadRequest(new { message = ModelState });
             }
 
-            Tasting? e;
+            Tasting? t;
             try
             {
                 // DB query for retrieve data by ID
-                e = _context.Tastings
+                t = _context.Tastings
                  .Include(r => r.Reviewer)
                     .Include(e => e.EventPlace)
                     .Include(w => w.Wine)
@@ -74,12 +76,12 @@ namespace CSHARPAPI_WineReview.Controllers
             {
                 return BadRequest(new { message = ex.Message });
             }
-            if (e == null)
+            if (t == null)
             {
                 return NotFound(new { message = "Recenzija ne postoji" });
             }
             // result mapped to DTO
-            return _mapper.Map<TastingDTORead>(e);
+            return Ok(_mapper.Map<TastingDTORead>(t));
         }
 
         /// <summary>
@@ -88,16 +90,77 @@ namespace CSHARPAPI_WineReview.Controllers
         /// <param name="tasting">The tasting to create.</param>
         /// <returns>The created tasting.</returns>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Tasting tasting)
+        public IActionResult Post(TastingDTOInsertUpdate dto)
         {
-            if (tasting == null || tasting.EventPlace.Id == 0 || tasting.Wine.Id == 0 || tasting.Reviewer.Id == 0 || string.IsNullOrEmpty(tasting.Review))
+
+            if (!ModelState.IsValid)
             {
-                return BadRequest(new { message = "Nema dovoljno podataka" });
+                return BadRequest(new {message= ModelState});   
             }
 
-            _context.Tastings.Add(tasting);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetById), new { id = tasting.Id }, tasting);
+            //get wine by ID
+            Wine? w;
+            try
+            {
+                w = _context.Wines.Find(dto.WineId);            
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new {message= ex.Message});
+            }
+            if (w == null)
+            {
+                return NotFound(new { message = "Vino ne postoji u bazi" });
+
+            }
+
+            //get EventPlace by ID
+            EventPlace? e;
+            try
+            {
+                e = _context.EventPlaces.Find(dto.EventId);            
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+
+            if (e == null)
+            {
+                return NotFound(new { message = "Događaj ne postoji u bazi" });
+            }
+
+            //get Reviewer by ID
+            Reviewer? r;
+            try
+            {
+                r = _context.Reviewers.Find(dto.ReviewerId);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            if (r == null)
+            {
+                return NotFound(new { message = "Recenzent ne postoji u bazi" });
+            }
+
+            //creates new entry in Tasting table
+            try
+            {
+                var t = _mapper.Map<Tasting>(dto);
+                t.Wine = w;
+                t.Reviewer = r;
+                t.EventPlace = e;
+                _context.Tastings.Add(t);
+                _context.SaveChanges();
+                return StatusCode(StatusCodes.Status201Created, _mapper.Map<Tasting>(t));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+
         }
 
         /// <summary>
@@ -108,28 +171,36 @@ namespace CSHARPAPI_WineReview.Controllers
         /// <returns>A status indicating the result of the update.</returns>
         [HttpPut("{id:int}")]
         [Produces("application/json")]
-        public async Task<IActionResult> Put(int id, [FromBody] Tasting tasting)
+        public IActionResult Put(int id, TastingDTOInsertUpdate dto)
         {
-            if (tasting == null || tasting.EventPlace.Id == 0 || tasting.Wine.Id == 0 || tasting.Reviewer.Id == 0 || string.IsNullOrEmpty(tasting.Review))
+
+            if (!ModelState.IsValid)
             {
-                return BadRequest(new { message = "Nema dovoljno podataka" });
+                return BadRequest(new { message = ModelState });
             }
 
-            var existingTasting = await _context.Tastings.FindAsync(id);
-            if (existingTasting == null)
+            //updates existing entry retrieve by ID in Tasting table
+            Tasting? t;
+            try
             {
-                return NotFound(new { message = "Podatak nije pronađen" });
+                t= _context.Tastings.FirstOrDefault(t=>t.Id== id);
+               
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new {message= ex.Message});
+            }
+            if (t == null)
+            {
+                return NotFound(new { message = "Unos ne postoji" });
             }
 
-            existingTasting.Reviewer.Id = tasting.Reviewer.Id;
-            existingTasting.EventPlace.Id = tasting.EventPlace.Id;
-            existingTasting.Wine.Id = tasting.Wine.Id;
-            existingTasting.Review = tasting.Review;
-            existingTasting.EventDate = tasting.EventDate;
+            t = _mapper.Map(dto, t);
+            _context.Tastings.Update(t);
+            _context.SaveChanges();
 
-            _context.Tastings.Update(existingTasting);
-            await _context.SaveChangesAsync();
             return Ok(new { message = "Uspješno promijenjeno" });
+            
         }
 
         /// <summary>

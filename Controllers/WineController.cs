@@ -1,5 +1,7 @@
-﻿using CSHARPAPI_WineReview.Data;
+﻿using AutoMapper;
+using CSHARPAPI_WineReview.Data;
 using CSHARPAPI_WineReview.Models;
+using CSHARPAPI_WineReview.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,26 +10,29 @@ namespace CSHARPAPI_WineReview.Controllers
 
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class WineController : ControllerBase
+
+    //dependency injection
+    public class WineController(WineReviewContext context, IMapper mapper) : WineReviewController(context, mapper)
     {
-
-        //dependency injection
-        private readonly WineReviewContext _context;
-        //construktor injection
-        public WineController(WineReviewContext context)
-        {
-            _context = context;
-        }
-
         /// <summary>
         /// Get all wines from the table.
         /// </summary>
         /// <returns>A list of wines.</returns>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public ActionResult<List<WineDTORead>> Get()
         {
-            var wines = await _context.Wines.ToListAsync();
-            return Ok(wines);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { message = ModelState });
+            }
+            try
+            {
+                return Ok(_mapper.Map<List<WineDTORead>>(_context.Wines));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         /// <summary>
@@ -36,14 +41,29 @@ namespace CSHARPAPI_WineReview.Controllers
         /// <param name="id">The ID of the wine.</param>
         /// <returns>The wine with the specified ID.</returns>
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById(int id)
+        public ActionResult<List<WineDTORead>> GetById(int id)
         {
-            var wine = await _context.Wines.FindAsync(id);
-            if (wine == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound(new { message = "Vino nije pronađeno" });
+                return BadRequest(new { message = ModelState });
             }
-            return Ok(wine);
+
+            Wine? w;
+            try
+            {
+                w = _context.Wines.FirstOrDefault(w => w.Id == id);               
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            if (w == null)
+            {
+                return NotFound(new { message = "Vino ne postoji u bazi" });
+            }
+
+            return Ok(_mapper.Map<WineDTORead>(w));
+
         }
 
         /// <summary>
@@ -52,16 +72,32 @@ namespace CSHARPAPI_WineReview.Controllers
         /// <param name="wine">The wine to create.</param>
         /// <returns>The created wine.</returns>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Wine wine)
+        public IActionResult Post(WineDTOInsertUpdate dto)
         {
-            if (wine == null || string.IsNullOrWhiteSpace(wine.WineName) || int.Parse(wine.YearOfHarvest) <= 0 || wine.Price <= 0)
+            if (!ModelState.IsValid)
             {
-                return BadRequest(new { message = "Nema dovoljno podataka" });
+                return BadRequest(new { message = ModelState });
             }
 
-            _context.Wines.Add(wine);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetById), new { id = wine.Id }, wine);
+            Wine? w;
+
+            //creates new entry in Wine table
+            try
+            {
+
+                w = _mapper.Map<Wine>(dto);
+                _context.Wines.Add(w);
+                if (w.YearOfHarvest.Length > 5)
+                {
+                    return NotFound(new { message = "Godina berbe ne smije sadržavati više od 5 znakova" });
+                }
+                _context.SaveChanges();
+                return StatusCode(StatusCodes.Status201Created, _mapper.Map<Wine>(w));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         /// <summary>
@@ -72,28 +108,34 @@ namespace CSHARPAPI_WineReview.Controllers
         /// <returns>A status indicating the result of the update.</returns>
         [HttpPut("{id:int}")]
         [Produces("application/json")]
-        public async Task<IActionResult> Put(int id, [FromBody] Wine wine)
+        public IActionResult Put(int id, WineDTOInsertUpdate dto)
         {
-            if (wine == null || string.IsNullOrWhiteSpace(wine.WineName) || int.Parse(wine.YearOfHarvest) <= 0 || wine.Price <= 0)
+            if (!ModelState.IsValid)
             {
-                return BadRequest(new { message = "Nema dovoljno podataka" });
+                return BadRequest(new { message = ModelState });
             }
 
-            var existingWine = await _context.Wines.FindAsync(id);
-            if (existingWine == null)
+            Wine? w;
+            //updates existing entry retrieve by ID in Wine table
+            try
             {
-                return NotFound(new { message = "Vino nije pronađeno" });
+                w = _context.Wines.FirstOrDefault(w => w.Id == id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            w = _mapper.Map(dto, w);
+            _context.Wines.Update(w);
+
+            if (w.YearOfHarvest.Length > 5)
+            {
+                return NotFound(new { message = "Godina berbe ne smije sadržavati više od 5 znakova" });
             }
 
-            existingWine.Maker = wine.Maker;
-            existingWine.WineName = wine.WineName;
-            existingWine.YearOfHarvest = wine.YearOfHarvest;
-            //decimal number needs to be in format "1.23" not "1,23" (needs to contain "."(dot) not ","(comma)
-            existingWine.Price = wine.Price;
+            _context.SaveChanges();
+            return StatusCode(StatusCodes.Status201Created, new { message = "Uspješno promijenjeno", wine=_mapper.Map<Wine>(w) });
 
-            _context.Wines.Update(existingWine);
-            await _context.SaveChangesAsync();
-            return Ok(new { message = "Uspješno promijenjeno" });
         }
 
         /// <summary>

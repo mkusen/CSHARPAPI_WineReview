@@ -1,33 +1,38 @@
-﻿using CSHARPAPI_WineReview.Data;
+﻿using AutoMapper;
+using CSHARPAPI_WineReview.Data;
 using CSHARPAPI_WineReview.Models;
+using CSHARPAPI_WineReview.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSHARPAPI_WineReview.Controllers
 {
 
-
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class ReviewerController : ControllerBase
+    //dependency injection
+    public class ReviewerController(WineReviewContext context, IMapper mapper) : WineReviewController(context, mapper)
     {
-        //dependency injection
-        private readonly WineReviewContext _context;
-        //constructor injection
-        public ReviewerController(WineReviewContext context)
-        {
-            _context = context;
-        }
-
+       
         /// <summary>
         /// Get all reviewers from the table.
         /// </summary>
         /// <returns>A list of reviewers.</returns>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public ActionResult<List<ReviewerDTORead>> Get()
         {
-            var reviewers = await _context.Reviewers.ToListAsync();
-            return Ok(reviewers);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { message = ModelState });
+            }
+            try
+            {
+                return Ok(_mapper.Map<List<ReviewerDTORead>>(_context.Reviewers));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         /// <summary>
@@ -36,14 +41,28 @@ namespace CSHARPAPI_WineReview.Controllers
         /// <param name="id">The ID of the reviewer.</param>
         /// <returns>The reviewer with the specified ID.</returns>
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById(int id)
+        public ActionResult<List<ReviewerDTORead>> GetById(int id)
         {
-            var reviewer = await _context.Reviewers.FindAsync(id);
-            if (reviewer == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound(new { message = "Korisnik nije pronađen" });
+                return BadRequest(new { message = ModelState });
             }
-            return Ok(reviewer);
+
+            Reviewer? r;
+            try
+            {
+                r = _context.Reviewers.FirstOrDefault(r => r.Id == id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            if (r == null)
+            {
+                return NotFound(new { message = "Recenzent ne postoji u bazi" });
+            }
+
+            return Ok(_mapper.Map<ReviewerDTORead>(r));
         }
 
         /// <summary>
@@ -52,16 +71,28 @@ namespace CSHARPAPI_WineReview.Controllers
         /// <param name="reviewer">The reviewer to create.</param>
         /// <returns>The created reviewer.</returns>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Reviewer reviewer)
+        public IActionResult Post(ReviewerDTOInsertUpdate dto)
         {
-            if (reviewer == null || string.IsNullOrWhiteSpace(reviewer.Email) || string.IsNullOrWhiteSpace(reviewer.FirstName) || string.IsNullOrWhiteSpace(reviewer.LastName))
+            if (!ModelState.IsValid)
             {
-                return BadRequest(new { message = "Nema dovoljno podataka" });
+                return BadRequest(new { message = ModelState });
             }
 
-            _context.Reviewers.Add(reviewer);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetById), new { id = reviewer.Id }, reviewer);
+            Reviewer? r;
+
+            //creates new entry in Reviewer table
+            try
+            {
+
+                r = _mapper.Map<Reviewer>(dto);
+                _context.Reviewers.Add(r);               
+                _context.SaveChanges();
+                return StatusCode(StatusCodes.Status201Created, _mapper.Map<Reviewer>(r));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         /// <summary>
@@ -72,27 +103,28 @@ namespace CSHARPAPI_WineReview.Controllers
         /// <returns>A status indicating the result of the update.</returns>
         [HttpPut("{id:int}")]
         [Produces("application/json")]
-        public async Task<IActionResult> Put(int id, [FromBody] Reviewer reviewer)
+        public IActionResult Put(int id, ReviewerDTOInsertUpdate dto)
         {
-            if (reviewer == null || string.IsNullOrWhiteSpace(reviewer.FirstName) || string.IsNullOrWhiteSpace(reviewer.LastName))
+            if (!ModelState.IsValid)
             {
-                return BadRequest(new { message = "Nema dovoljno podataka" });
+                return BadRequest(new { message = ModelState });
             }
 
-            var existingReviewer = await _context.Reviewers.FindAsync(id);
-            if (existingReviewer == null)
+            Reviewer? r;
+            //updates existing entry retrieve by ID in Wine table
+            try
             {
-                return NotFound(new { message = "Korisnik nije pronađen" });
+                r = _context.Reviewers.FirstOrDefault(r => r.Id == id);
             }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            r = _mapper.Map(dto, r);
+            _context.Reviewers.Update(r);
 
-            // existingReviewer.Email = reviewer.Email;
-            existingReviewer.Pass = reviewer.Pass;
-            existingReviewer.FirstName = reviewer.FirstName;
-            existingReviewer.LastName = reviewer.LastName;
-
-            _context.Reviewers.Update(existingReviewer);
-            await _context.SaveChangesAsync();
-            return Ok(new { message = "Uspješno promijenjeno" });
+            _context.SaveChanges();
+            return StatusCode(StatusCodes.Status201Created, new { message = "Uspješno promijenjeno", wine = _mapper.Map<Reviewer>(r) });
         }
 
         /// <summary>
