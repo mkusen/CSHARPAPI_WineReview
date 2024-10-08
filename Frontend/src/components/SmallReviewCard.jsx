@@ -1,7 +1,9 @@
+import { Container } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 
 export default function SmallReviewCard() {
   return (
+    
     <Card style={{ width: '18rem' }}>
       <Card.Body>
         <Card.Title>Naziv vina</Card.Title>
@@ -13,6 +15,7 @@ export default function SmallReviewCard() {
         <Card.Link href="#">Ime Prezime recenzenta</Card.Link>
       </Card.Body>
     </Card>
+  
   );
 }
 

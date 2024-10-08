@@ -5,48 +5,52 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
+
 export default function NavBarWineReview() {
 
 //const navigate = useNavigate();
 
   return (
+  
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-      <Navbar.Brand href="/">Wine Review</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Brand >Wine Review</Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Collapse id="navbarScroll">
           <Nav
-            className="me-auto"
+            className="me-auto my-2 my-lg-0"
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link href="#action2">Link</Nav.Link>
-            <NavDropdown title="Link" id="navbarScrollingDropdown">
-              <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action4">
-                Another action
+            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href="#reviewer">Korisnik</Nav.Link>
+            <Nav.Link href="#about">O aplikaciji</Nav.Link>
+            <NavDropdown title="Zabava" id="navbarScrollingDropdown">
+             
+              <NavDropdown.Item href="#cyclic">
+                Ciklična tablica
               </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action5">
-                Something else here
+              
+              <NavDropdown.Item href="#alcotest">
+                Alkotest
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="#" disabled>
-              Link
-            </Nav.Link>
+           
           </Nav>
           <Form className="d-flex">
             <Form.Control
               type="search"
-              placeholder="Search"
+              placeholder="upiši min 3 znaka"
               className="me-2"
-              aria-label="Search"
+              aria-label="Pretraži"
             />
             <Button variant="outline-success">Search</Button>
           </Form>
         </Navbar.Collapse>
       </Container>
     </Navbar>
+
   );
 }
+
+

@@ -6,9 +6,9 @@ import SmallReviewCard from '../components/SmallReviewCard';
 export default function EntryPage(){
     return(
         <>
-        <Container>
-    <SmallReviewCard />
-           </Container>
-            </>
+            <Container>
+                <SmallReviewCard />
+            </Container>
+        </>
     )
 }

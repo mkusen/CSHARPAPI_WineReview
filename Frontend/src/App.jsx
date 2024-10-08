@@ -1,9 +1,11 @@
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 import { Container} from 'react-bootstrap';
 import { Route, Routes } from 'react-router-dom';
 import { RoutesNames } from './services/constants';
 import EntryPage from './pages/EntryPage';
 import NavBarWineReview from './components/NavBarWineReview';
+import LoadingSpinner from './components/LoadingSpinner';
 
 function App() {
  
@@ -16,11 +18,9 @@ function App() {
     return startFrom + ' - ' + current;
   }
 
-
-
   return (
     <>
-      {/* <LoadingSpinner /> */}
+    <LoadingSpinner />
       <Container className='app'>
       <NavBarWineReview />
           <Routes>
