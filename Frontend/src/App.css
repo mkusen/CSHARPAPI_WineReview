@@ -1,25 +1,23 @@
 .right{
-    text-align: right;
+  text-align: right;
 }
-.center{
-    text-align: center;
+.middle{
+  text-align: center;
 }
 .wide{
-    width: 100%;
+  width: 100%;
 }
 .app{
-    min-height: 2%;
-}
-.copywright{
-    text-align: centar;
-    color: yellowgreen;  
-    position: relative;    
+  min-height: 500px;
 }
 
-#root {
-    max-width: 1500px;
-    margin: auto;
-    padding: 2rem;
-    text-align: center;
-  }
- 
+.loading-spinner-overlay {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.2);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

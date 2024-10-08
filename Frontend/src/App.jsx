@@ -1,14 +1,12 @@
-
 import './App.css'
-import { Container } from 'react-bootstrap'
+import { Container} from 'react-bootstrap';
+import { Route, Routes } from 'react-router-dom';
+import { RoutesNames } from './services/constants';
+import EntryPage from './pages/EntryPage';
 import NavBarWineReview from './components/NavBarWineReview';
-import ReviewCards from './components/ReviewCards';
-
-
-//this class loads app
 
 function App() {
-
+ 
   function year(){
     const startFrom = 2024;
     const current = new Date().getFullYear();
@@ -17,18 +15,22 @@ function App() {
     }
     return startFrom + ' - ' + current;
   }
-  
+
+
+
   return (
     <>
-   
-    <Container className='center'>  
-    <NavBarWineReview/>
-    <ReviewCards /> 
-    </Container>
-    <Container className='copywright'>
-      Wine review &copy; {year()}
-    </Container>
-     
+      {/* <LoadingSpinner /> */}
+      <Container className='app'>
+      <NavBarWineReview />
+          <Routes>
+            <Route path={RoutesNames.HOME} element={<EntryPage />} />
+          </Routes>
+      </Container>
+
+      <Container>
+        Wine Review &copy; {year()}
+      </Container>
     </>
   )
 }
