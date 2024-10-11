@@ -1,5 +1,5 @@
 import { Container} from 'react-bootstrap';
-import SmallReviewCard from '../components/SmallReviewCard';
+import TastingGet from './tasting/TastingGet';
 
 
 
@@ -7,7 +7,7 @@ export default function EntryPage(){
     return(
         <>
             <Container>
-                <SmallReviewCard />
+               <TastingGet />
             </Container>
         </>
     )

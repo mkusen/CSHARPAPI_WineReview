@@ -156,5 +156,31 @@ namespace CSHARPAPI_WineReview.Controllers
 
             return Ok(new { message = "Uspješno obrisano" });
         }
+
+        [HttpGet]
+        [Route("getPages/{page}")]
+        public IActionResult GetReviewerPages(int page, string condition = "")
+        {
+            var byPage = 4;
+            condition= condition.ToLower();
+            try
+            {
+                var reviewers = _context.Reviewers
+                    .Where(r => EF.Functions.Like(r.FirstName.ToLower(), "%" + condition + "%")
+                    || EF.Functions.Like(r.LastName.ToLower(), "%" + condition + "%"))
+                    .Skip((byPage * page) - byPage)
+                    .Take(byPage)
+                    .OrderBy(r => r.LastName)
+                    .ToList();
+
+                return Ok(_mapper.Map<List<ReviewerDTORead>>(reviewers));
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);  
+            }
+        }
+
     }
 }

@@ -4,11 +4,13 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useNavigate } from 'react-router-dom';
+import { RoutesNames } from '../constants';
 
 
 export default function NavBarWineReview() {
 
-//const navigate = useNavigate();
+const navigate = useNavigate();
 
   return (
   
@@ -22,8 +24,8 @@ export default function NavBarWineReview() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#reviewer">Korisnik</Nav.Link>
+            <Nav.Link onClick={()=>navigate(RoutesNames.HOME)}>Home</Nav.Link>
+            <Nav.Link onClick={()=>navigate(RoutesNames.REVIEWER_GET)}>Korisnik</Nav.Link>
             <Nav.Link href="#about">O aplikaciji</Nav.Link>
             <NavDropdown title="Zabava" id="navbarScrollingDropdown">
              

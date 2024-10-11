@@ -30,14 +30,16 @@ namespace CSHARPAPI_WineReview.Controllers
             try
             {
                 // DB query for retrieve data
-                var tastings = _context.Tastings
-                    .Include(r => r.Reviewer)
-                    .Include(e => e.EventPlace)
-                    .Include(w => w.Wine)
-                    .ToList();
+                var tasting = _context.Tastings
+                    .Include(r => r.Reviewer)                
+                    .Include(e => e.EventPlace)               
+                    .Include(w => w.Wine);
+
+               
+                
 
                 // result mapped to DTO
-                return _mapper.Map<List<TastingDTORead>>(tastings);
+                return _mapper.Map<List<TastingDTORead>>(tasting);
             }
             catch (Exception e)
             {
