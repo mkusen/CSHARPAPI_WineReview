@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import useLoading from "../../hooks/useLoading";
 import TastingService from "../../services/TastingService";
-import { Card, Col, Container } from "react-bootstrap";
+import { Card, Col, Container, Nav } from "react-bootstrap";
+import { RoutesNames } from "../../constants";
+import { useNavigate } from "react-router-dom";
 
 
 export default function TastingGet() {
     const [tastings, setTastings] = useState();
     const { showLoading, hideLoading } = useLoading();
- 
+    const navigate = useNavigate();
 
     async function TastingGet() {
         await TastingService.getTastings()
@@ -32,13 +34,13 @@ export default function TastingGet() {
                         <Col key={t.id}>
                             <Card style={{ width: '18rem' }}>
                                 <Card.Body>
-                                    <Card.Title>{t.wineName}</Card.Title>
+                                    <Card.Link href="Wine">{t.wineName}</Card.Link>
                                     <Card.Subtitle className="mb-2 text-muted">{t.eventName}</Card.Subtitle>
-                                    <Card.Text>
-                                    {t.review}
-                                    </Card.Text>
-                                    <Card.Link href="#">Klikni za više</Card.Link>
-                                    <Card.Link href="#">{t.reviewerName}</Card.Link>
+                                    <Card.Text>{t.review}
+                                        
+                                                                              
+                                        </Card.Text>                                   
+                                    <Card.Link href="Reviewer">{t.reviewerName}</Card.Link>
                                 </Card.Body>
                             </Card>
                         </Col>

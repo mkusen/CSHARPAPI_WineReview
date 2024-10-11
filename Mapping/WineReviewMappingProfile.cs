@@ -13,12 +13,12 @@ namespace CSHARPAPI_WineReview.Mapping
             CreateMap<Tasting, TastingDTORead>()
                 .ForCtorParam("WineName",
                 opt => opt.MapFrom(src => src.Wine.WineName + " " +
-                    src.Wine.Maker + " " + src.Wine.YearOfHarvest + " " + src.Wine.Price))                
+                    src.Wine.Maker))                
                 .ForCtorParam("ReviewerName",
                 opt => opt.MapFrom(src => src.Reviewer.FirstName + " " + src.Reviewer.LastName))
                 .ForCtorParam("EventName",
-                opt => opt.MapFrom(src => src.EventPlace.Country + " " + src.EventPlace.City + " " + 
-                src.EventPlace.PlaceName + " " + src.EventPlace.EventName));
+                opt => opt.MapFrom(src => src.EventPlace.City + ", " + 
+                src.EventPlace.PlaceName));
             CreateMap<Tasting, TastingDTOInsertUpdate>()
                  .ForCtorParam("WineId",
                  opt => opt.MapFrom(src => src.Wine.WineName + " " + src.Wine.Maker + " " + 
