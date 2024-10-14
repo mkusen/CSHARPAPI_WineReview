@@ -26,7 +26,7 @@ export default function ReviewerGet() {
         showLoading();
         ReviewersGet();
         hideLoading();
-    });
+    }, []);
 
 
     return (

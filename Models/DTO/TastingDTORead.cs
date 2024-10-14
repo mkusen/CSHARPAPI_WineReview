@@ -10,11 +10,17 @@
             //user (reviewer) by FK 'id_reviewer' taken from 'reviewer' table
             string ReviewerName,
 
+            int ReviewerId,
+
             //wine by FK 'id_wine' taken from 'wine' table
             string WineName,
 
+            int WineId, 
+
             //event_places by FK 'id_event_place' taken from 'event_places' table
-            string EventName
+            string EventName,
+
+        int EventId
 
         );
 

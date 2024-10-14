@@ -12,7 +12,7 @@ export default function EventPlaceGet() {
         await EventPlaceService.getEventPlaces()
             .then((response) => {
                 setEventPlaces(response);
-               //console.log(response);
+               
             })
             .catch((e) => { console.error(e) });
 

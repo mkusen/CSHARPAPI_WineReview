@@ -7,6 +7,7 @@ export const RoutesNames = {
     REVIEWER_UPDATE: '/reviewer/:id', 
 
     WINE_GET: '/wine',
+    WINE_GET_BY_ID: '/wine/:id',
     WINE_ADD: '/wine/addWine',
     WINE_UPDATE: '/wine/:id',
 

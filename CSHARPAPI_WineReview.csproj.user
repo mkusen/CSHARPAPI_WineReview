@@ -2,6 +2,6 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ActiveDebugProfile>https</ActiveDebugProfile>
-    <NameOfLastUsedPublishProfile>C:\Users\Admin\Documents\GitHub\CSHARPAPI_WineReview\Properties\PublishProfiles\mkusen-001-site1 - FTP.pubxml</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>C:\Users\mario\Downloads\github\mkusen\CSHARPAPI_WineReview\Properties\PublishProfiles\mkusen-001-site1 - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

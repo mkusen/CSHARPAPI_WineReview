@@ -7,6 +7,7 @@ import EntryPage from './pages/EntryPage';
 import NavBarWineReview from './components/NavBarWineReview';
 import LoadingSpinner from './components/LoadingSpinner';
 import ReviewerGet from './pages/reviewer/ReviewerGet';
+import WineGet from './pages/wine/WineGet';
 
 function App() {
  
@@ -27,6 +28,8 @@ function App() {
           <Routes>
             <Route path={RoutesNames.HOME} element={<EntryPage />} />
             <Route path={RoutesNames.REVIEWER_GET} element={<ReviewerGet />} />
+            <Route path={RoutesNames.WINE_GET} element={<WineGet />} />
+            <Route path={RoutesNames.WINE_GET_BY_ID} element={<WineGet />} />
           </Routes>
       </Container>
 

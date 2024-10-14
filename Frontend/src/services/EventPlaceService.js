@@ -6,7 +6,20 @@ async function getEventPlaces() {
             return response.data;
         })
         .catch((e) => { console.error(e) })
-}
+        }
+
+
+        async function getEventPlaceById(id) {
+
+            return await HttpService.get('/EventPlaces/' + id)
+            .then((response) => {
+                return{error:false, message: response.data}
+            })
+            .catch(()=>{
+                return {error:true, message: 'Restoran ne postoji'}
+            })
+        }
 export default{
-getEventPlaces
+getEventPlaces,
+getEventPlaceById
 }
