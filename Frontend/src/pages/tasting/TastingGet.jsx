@@ -9,7 +9,7 @@ export default function TastingGet() {
     //const[tasting, setTasting] =useState();
     const { showLoading, hideLoading } = useLoading();
 
-    const WineById = (id) => window.location.href=`/wine?id=${id}`;
+    const WineById = (id) => window.location.href=`/wineById?id=${id}`;
     const ReviewerById = (id) => window.location.href=`/reviewerById?id=${id}`;
     const EventPlaceById = (id) => window.location.href=`/eventplace?id=${id}`;
     

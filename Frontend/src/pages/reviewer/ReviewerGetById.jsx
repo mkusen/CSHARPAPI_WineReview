@@ -19,7 +19,7 @@ export default function ReviewerGetById() {
             console.log(response);
             console.log("id reviever " + id);
 
-            setReviewer(response)
+            setReviewer(response.message);
         })
         .catch((e)=>{console.log(e)});
         
@@ -35,20 +35,18 @@ export default function ReviewerGetById() {
     return (
         <>
             <Container>
-                {Array.isArray (reviewer) && reviewer.lenght >0 ? (reviewer.map((r) =>(
-                    <Col key={r.id}>
+                
+                    <Col key={1}>
                      <Card style={{ width: '18rem' }}>
                         <Card.Body>
-                            <Card.Title>{r.firstName} {r.lastName}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">{r.email}</Card.Subtitle>
+                            <Card.Title>{reviewer.firstName} {reviewer.lastName}</Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted">{reviewer.email}</Card.Subtitle>
                             <Card.Link href="#">Promijeni</Card.Link>
                             <Card.Link href="#">Obriši</Card.Link>
                         </Card.Body>
                     </Card>  
                     </Col>
-                ))):(
-                    <div>Korisnik nije pronađen</div>
-                )}
+              
             </Container>
 
         </>
