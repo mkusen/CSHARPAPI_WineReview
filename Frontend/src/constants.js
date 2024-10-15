@@ -2,18 +2,20 @@ export const RoutesNames = {
 
     HOME: '/',
 
-    REVIEWER_GET: '/reviewer',
+    REVIEWER_GET_ALL: '/reviewer',
+    REVIEWER_GET_BY_ID: '/reviewerById',
     REVIEWER_ADD: '/reviewer/addReviewer', 
-    REVIEWER_UPDATE: '/reviewer/:id', 
+    REVIEWER_UPDATE: '/updateReviewer', 
 
-    WINE_GET: '/wine',
-    WINE_GET_BY_ID: '/wine/:id',
+    WINE_GET_ALL: '/wine',
+    WINE_GET_BY_ID: '/wineById',
     WINE_ADD: '/wine/addWine',
     WINE_UPDATE: '/wine/:id',
 
-    EVENTPLACE_GET: '',
-    EVENTPLACE_ADD: '',
-    EVENTPLACE_UPDATE: '',
+    EVENTPLACE_GET_ALL: '/eventplace',
+    EVENTPLACE_GET_BY_ID: '/eventplaceById',
+    EVENTPLACE_ADD: '/eventplace/addEventPlace',
+    EVENTPLACE_UPDATE: '/eventplace/:id',
 
     ABOUT: '',
 
@@ -23,7 +25,7 @@ export const RoutesNames = {
 
 
 //remote server
-//export const BACKEND_URL = 'https://mkusen-001-site1.ktempurl.com/api/v1';
+export const BACKEND_URL = 'https://mkusen-001-site1.ktempurl.com/api/v1';
 
 //localhost
-export const BACKEND_URL = 'https://localhost:7096/api/v1';
+//export const BACKEND_URL = 'https://localhost:7096/api/v1';

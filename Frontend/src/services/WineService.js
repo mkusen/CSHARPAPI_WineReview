@@ -1,7 +1,14 @@
 import { HttpService } from "./HttpService";
 
 
-
+async function getWines() 
+{
+    return await HttpService.get('/Wine')
+    .then((response)=>{
+            return response.data;
+    })
+    .catch((e)=>{console.error(e)})
+}
 
 async function getWineById(id) {
     return await HttpService.get('/Wine/' + id)
@@ -14,6 +21,7 @@ async function getWineById(id) {
     
 }
 
-export default{    
+export default{  
+    getWines,  
     getWineById
 }

@@ -34,7 +34,7 @@ async function deleteReviewer(id){
 }
 
 async function addReviewer(Reviewer) {
-    return await HttpService.post('/Reviewer/' + Reviewer)
+    return await HttpService.post('/Reviewer',Reviewer)
     .then((response)=>{
         return {error:false, message: response.data}
     })
@@ -60,10 +60,30 @@ async function getPages(page, condition) {
     .catch(()=>{return {error:true, message: 'Nije moguće dohvatiti korisnike'}})
 }
 
+async function updateReviewer(id, Reviewer) {
+    return await HttpService.put('/Reviewer/' + id, Reviewer)
+    .then((response)=>{
+        return {error: false, message: response.data}
+    })
+    .catch((e)=>{
+        switch (e.status){
+            case 400:
+                let messages=' ';
+                for (const key in e.response.data.errors){
+                    messages += key + ': ' + e.response.data.errors[key][0] + '\n';
+                }
+                return {error: true, message: messages}
+                default:
+                    return {error:true, message:'Nije moguće izmijeniti podatke korisnika'}
+        }
+    })
+}
+
 export default {
 getReviewers,
 getReviewerById,
 deleteReviewer,
 addReviewer,
-getPages
+getPages,
+updateReviewer
 }

@@ -15,8 +15,7 @@ const navigate = useNavigate();
   return (
   
     <Navbar expand="lg" className="bg-body-tertiary">
-      <Container fluid>
-        <Navbar.Brand >Wine Review</Navbar.Brand>
+      <Container fluid>        
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -24,10 +23,10 @@ const navigate = useNavigate();
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link onClick={()=>navigate(RoutesNames.HOME)}>Home</Nav.Link>
-            <Nav.Link onClick={()=>navigate(RoutesNames.REVIEWER_GET)}>Korisnik</Nav.Link>
+            <Nav.Link onClick={()=>navigate(RoutesNames.HOME)}><strong>Wine Review</strong></Nav.Link>
+            <Nav.Link onClick={()=>navigate(RoutesNames.REVIEWER_ADD)}>Dodaj novog korisnika</Nav.Link>
             <Nav.Link href="#about">O aplikaciji</Nav.Link>
-            <NavDropdown title="Zabava" id="navbarScrollingDropdown">
+            <NavDropdown title="Zabava" id="navbarScrollingDropdown">   
              
               <NavDropdown.Item href="#cyclic">
                 Ciklična tablica
@@ -37,7 +36,7 @@ const navigate = useNavigate();
                 Alkotest
               </NavDropdown.Item>
             </NavDropdown>
-           
+                   
           </Nav>
           <Form className="d-flex">
             <Form.Control

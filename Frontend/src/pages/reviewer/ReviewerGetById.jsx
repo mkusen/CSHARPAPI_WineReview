@@ -4,27 +4,30 @@ import useLoading from "../../hooks/useLoading";
 import { Card, Col, Container } from "react-bootstrap";
 
 
-//this file parse and represents data from backend to UI
+export default function ReviewerGetById() {
 
-export default function ReviewerGet() {
-
-    const [reviewers, setReviewers] = useState();
-
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');  
+    
+    const [reviewer, setReviewer] = useState({});
     const { showLoading, hideLoading } = useLoading();
 
-    async function ReviewersGet() {  
-        await ReviewerService.getReviewers()      
-            .then((response) => {
-                setReviewers(response);
-                console.log(response);              
-            })
-            .catch((e) => { console.log(e) });
-      
+    async function ReviewerById() {
+
+        await ReviewerService.getReviewerById(id)
+        .then((response)=>{
+            console.log(response);
+            console.log("id reviever " + id);
+
+            setReviewer(response)
+        })
+        .catch((e)=>{console.log(e)});
+        
     }
 
     useEffect(() => {
         showLoading();
-        ReviewersGet();
+        ReviewerById();
         hideLoading();
     }, []);
 
@@ -32,7 +35,7 @@ export default function ReviewerGet() {
     return (
         <>
             <Container>
-                {reviewers && reviewers.map((r) =>(
+                {Array.isArray (reviewer) && reviewer.lenght >0 ? (reviewer.map((r) =>(
                     <Col key={r.id}>
                      <Card style={{ width: '18rem' }}>
                         <Card.Body>
@@ -43,7 +46,9 @@ export default function ReviewerGet() {
                         </Card.Body>
                     </Card>  
                     </Col>
-                ))}
+                ))):(
+                    <div>Korisnik nije pronađen</div>
+                )}
             </Container>
 
         </>

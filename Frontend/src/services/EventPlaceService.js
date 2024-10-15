@@ -19,6 +19,8 @@ async function getEventPlaces() {
                 return {error:true, message: 'Restoran ne postoji'}
             })
         }
+
+
 export default{
 getEventPlaces,
 getEventPlaceById
