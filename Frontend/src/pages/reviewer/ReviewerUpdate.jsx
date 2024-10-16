@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import useLoading from "../../hooks/useLoading";
 import ReviewerService from "../../services/ReviewerService";
 import { useEffect, useState } from "react";
@@ -10,34 +10,36 @@ export default function ReviewerUpdate() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id'); 
 
-    const { showLoading, hideLoading } = useLoading();
-    const routeParams = useParams();
+    const { showLoading, hideLoading } = useLoading();   
 
     const [reviewer, setReviewer] = useState({});
+
+    const navigate = useNavigate();
 
     
     async function ReviewerById() {
         showLoading();
-        const response = await ReviewerService.getReviewerById(id);    
-        console.log(response);    
+        const response = await ReviewerService.getReviewerById(id);     
         hideLoading();
 
         if(response.error){
             alert(response.message);
             return;
         }
-       setReviewer(response);
+       setReviewer(response.message);
         
     }
 
     async function UpdateReviewer(e) {
         showLoading();
-        const response = await ReviewerService.updateReviewer(routeParams.id, e);
+        const response = await ReviewerService.updateReviewer(id, e);
         hideLoading();
         if (response.error) {
             alert(response.message);
             return;
         }
+
+        navigate(RoutesNames.REVIEWER_GET_ALL);
     }
 
     function onSubmit(e){
@@ -45,7 +47,8 @@ export default function ReviewerUpdate() {
         const data = new FormData(e.target);
         UpdateReviewer({
                 firstName: data.get('firstName'),
-                lastName: data.get('lastName'),               
+                lastName: data.get('lastName'), 
+                email: data.get('email'),              
                 pass: data.get('pass')
         });
 
@@ -65,18 +68,22 @@ export default function ReviewerUpdate() {
                     <br />
                     <Form.Group controlId="firstName">
                         <Form.Label>Ime</Form.Label>
-                        <Form.Control type="text" name="firstName" required defaultValue={reviewer.firstName}/>
-                        
+                        <Form.Control type="text" name="firstName" required defaultValue={reviewer.firstName}/>                        
                     </Form.Group>
 
                     <Form.Group controlId="lastName">
                         <Form.Label>Prezime</Form.Label>
                         <Form.Control type="text" name="lastName" required defaultValue={reviewer.lastName}/>
                     </Form.Group>
+                    
+                    <Form.Group controlId="email">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control type="text" name="email" required defaultValue={reviewer.email}/>
+                    </Form.Group>
 
                     <Form.Group controlId="pass">
                         <Form.Label>Lozinka</Form.Label>
-                        <Form.Control type="password" name="pass" hint="Potrebno je upisati novu lozinku" />
+                        <Form.Control type="password" name="pass" placeholder="Potrebno je upisati novu lozinku" />
                     </Form.Group>
                  <br />                 
                     <Row>

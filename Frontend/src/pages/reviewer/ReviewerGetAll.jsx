@@ -43,8 +43,9 @@ export default function ReviewerGetAll() {
     return (
         <>
             <Container>
-                <Stack gap={3} >
-                    <Row>
+                <br />
+                <Stack gap={3} >        
+                    <Row>                      
                         {reviewers && reviewers.map((r) => (
                             <Col key={r.id}>
                                 <Card style={{ width: '18rem' }}>

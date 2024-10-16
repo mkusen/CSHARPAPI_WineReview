@@ -40,7 +40,7 @@ export default function ReviewerAdd(){
         <>
             <Container>
                 <br />
-                <strong> Dodavanje novog korisnika </strong>
+                <strong> Dodavanje novog recenzenta </strong>
                 <Form onSubmit={onSubmit}>
                     <br />
                     <Form.Group controlId="firstName">
@@ -72,7 +72,7 @@ export default function ReviewerAdd(){
                         </Col>
                         <Col xs={6} sm={6} md={9} lg={6} xl={6} xxl={6}>
                             <Button variant="primary" type="submit" className="siroko">
-                                Dodaj novog korisnika
+                                Dodaj novog recenzenta
                             </Button>
                         </Col>
                     </Row>

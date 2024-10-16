@@ -61,6 +61,9 @@ async function getPages(page, condition) {
 }
 
 async function updateReviewer(id, Reviewer) {
+console.log("id: " + id + "reviewer: "+ Reviewer);
+
+
     return await HttpService.put('/Reviewer/' + id, Reviewer)
     .then((response)=>{
         return {error: false, message: response.data}

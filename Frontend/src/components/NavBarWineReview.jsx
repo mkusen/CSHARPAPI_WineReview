@@ -24,8 +24,28 @@ const navigate = useNavigate();
             navbarScroll
           >
             <Nav.Link onClick={()=>navigate(RoutesNames.HOME)}><strong>Wine Review</strong></Nav.Link>
-            <Nav.Link onClick={()=>navigate(RoutesNames.REVIEWER_ADD)}>Dodaj novog korisnika</Nav.Link>
-            <Nav.Link href="#about">O aplikaciji</Nav.Link>
+            
+            <NavDropdown title="Vina" id="navbarScrollingDropdown"> 
+             
+             <NavDropdown.Item onClick={()=>navigate(RoutesNames.WINE_ADD)}>
+               Dodaj novo vino
+             </NavDropdown.Item>
+             
+             <NavDropdown.Item onClick={()=>navigate(RoutesNames.WINE_GET_ALL)}>
+               Sva vina
+             </NavDropdown.Item>
+           </NavDropdown>
+
+            <NavDropdown title="Korisnici" id="navbarScrollingDropdown"> 
+             
+             <NavDropdown.Item onClick={()=>navigate(RoutesNames.REVIEWER_ADD)}>
+               Dodaj novog recenzenta
+             </NavDropdown.Item>
+             
+             <NavDropdown.Item onClick={()=>navigate(RoutesNames.REVIEWER_GET_ALL)}>
+               Svi recenzenti
+             </NavDropdown.Item>
+           </NavDropdown>
             <NavDropdown title="Zabava" id="navbarScrollingDropdown">   
              
               <NavDropdown.Item href="#cyclic">

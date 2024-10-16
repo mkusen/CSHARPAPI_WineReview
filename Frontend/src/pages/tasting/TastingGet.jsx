@@ -11,16 +11,18 @@ export default function TastingGet() {
 
     const WineById = (id) => window.location.href=`/wineById?id=${id}`;
     const ReviewerById = (id) => window.location.href=`/reviewerById?id=${id}`;
-    const EventPlaceById = (id) => window.location.href=`/eventplace?id=${id}`;
+    const EventPlaceById = (id) => window.location.href=`/eventplaceById?id=${id}`;
     
     //const navigate = useNavigate();
 
-    async function TastingGet() {      
+    async function TastingGet() {  
+        
         await TastingService.getTastings()
             .then((response) => {                
-                setTastings(response);              
+                setTastings(response);                          
             })
-            .catch((e) => { console.error(e) });    
+            .catch((e) => { console.error(e) });  
+      
     }
 
     // async function TastingById(id) {
@@ -36,26 +38,26 @@ export default function TastingGet() {
     // }
 
     
-    useEffect(() => {
-        showLoading();
-        TastingGet();
-        hideLoading();
+    useEffect(() => { 
+        showLoading();    
+        TastingGet(); 
+       hideLoading();      
     })
 
 
     return (
         <>
             <Container>
+            <br />
                 <Stack gap={3} >
                     <Row>
                         {tastings && tastings.map((t) => (
                             <Col key={t.id}>
-                                <Card style={{ width: '18rem' }}>
+                                <Card style={{ width: '16rem' }}>
                                     <Card.Body>
                                         <Card.Link onClick={() => WineById(t.wineId)}>{t.wineName}</Card.Link>
                                         <br />
                                         <Card.Link onClick={() => EventPlaceById(t.eventId)}>{t.eventName}</Card.Link>
-
                                         <Card.Text>  <br /> {t.review}
                                         </Card.Text>
                                         <Card.Link onClick={() => ReviewerById(t.reviewerId)}>{t.reviewerName}</Card.Link>

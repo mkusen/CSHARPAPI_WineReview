@@ -10,12 +10,12 @@ export const RoutesNames = {
     WINE_GET_ALL: '/wine',
     WINE_GET_BY_ID: '/wineById',
     WINE_ADD: '/wine/addWine',
-    WINE_UPDATE: '/wine/:id',
+    WINE_UPDATE: '/updateWine',
 
     EVENTPLACE_GET_ALL: '/eventplace',
     EVENTPLACE_GET_BY_ID: '/eventplaceById',
     EVENTPLACE_ADD: '/eventplace/addEventPlace',
-    EVENTPLACE_UPDATE: '/eventplace/:id',
+    EVENTPLACE_UPDATE: '/updateEventplace',
 
     ABOUT: '',
 
