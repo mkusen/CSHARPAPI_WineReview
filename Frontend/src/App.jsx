@@ -39,6 +39,8 @@ function App() {
 
             <Route path={RoutesNames.WINE_GET_ALL} element={<WineGet />} />
             <Route path={RoutesNames.EVENTPLACE_GET_ALL} element={<EventPlaceGet />} />
+
+            <Route path={RoutesNames.WINE_GET_BY_ID} element={<WineGet />} />
           </Routes>
       </Container>
 
