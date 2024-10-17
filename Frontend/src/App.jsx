@@ -6,7 +6,6 @@ import { RoutesNames } from './constants';
 import EntryPage from './pages/EntryPage';
 import NavBarWineReview from './components/NavBarWineReview';
 import LoadingSpinner from './components/LoadingSpinner';
-import EventPlaceGet from './pages/eventplace/EventPlaceGet';
 import ReviewerAdd from './pages/reviewer/ReviewerAdd';
 import ReviewerGetAll from './pages/reviewer/ReviewerGetAll';
 import ReviewerGetById from './pages/reviewer/ReviewerGetById';
@@ -15,6 +14,10 @@ import WineGetAll from './pages/wine/WineGetAll';
 import WineGetById from './pages/wine/WineGetById';
 import WineAdd from './pages/wine/WineAdd';
 import WineUpdate from './pages/wine/WineUpdate';
+import EventPlaceGetAll from './pages/eventplace/EventPlaceGetAll';
+import EventPlaceGetById from './pages/eventplace/EventPlaceGetById';
+import EventPlaceAdd from './pages/eventplace/EventPlaceAdd';
+import EventPlaceUpdate from './pages/eventplace/EventPlaceUpdate';
 
 function App() {
  
@@ -45,15 +48,15 @@ function App() {
             <Route path={RoutesNames.WINE_ADD} element={<WineAdd />} />
             <Route path={RoutesNames.WINE_UPDATE} element={<WineUpdate />} />
 
-
-            <Route path={RoutesNames.EVENTPLACE_GET_ALL} element={<EventPlaceGet />} />
-
+            <Route path={RoutesNames.EVENTPLACE_GET_ALL} element={<EventPlaceGetAll />} />
+            <Route path={RoutesNames.EVENTPLACE_GET_BY_ID} element={<EventPlaceGetById />} />
+            <Route path={RoutesNames.EVENTPLACE_ADD} element={<EventPlaceAdd />} />
+            <Route path={RoutesNames.EVENTPLACE_UPDATE} element={<EventPlaceUpdate />} />
             
           </Routes>
-      </Container>
 
-      <Container>
-        Wine Review &copy; {year()}
+   <br/><strong><p className='right'>Wine Review &copy; {year()}</p> </strong>
+       
       </Container>
     </>
   )

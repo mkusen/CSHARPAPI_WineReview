@@ -16,13 +16,14 @@ export default function TastingGet() {
     //const navigate = useNavigate();
 
     async function TastingGet() {  
-        
+       
         await TastingService.getTastings()
             .then((response) => {                
-                setTastings(response);                          
+                setTastings(response);  
+                                       
             })
             .catch((e) => { console.error(e) });  
-      
+               
     }
 
     // async function TastingById(id) {
@@ -39,9 +40,9 @@ export default function TastingGet() {
 
     
     useEffect(() => { 
-        showLoading();    
+        showLoading();  
         TastingGet(); 
-       hideLoading();      
+        hideLoading();  
     })
 
 

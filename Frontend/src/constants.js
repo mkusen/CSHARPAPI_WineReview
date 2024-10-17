@@ -15,7 +15,7 @@ export const RoutesNames = {
     EVENTPLACE_GET_ALL: '/eventplace',
     EVENTPLACE_GET_BY_ID: '/eventplaceById',
     EVENTPLACE_ADD: '/eventplace/addEventPlace',
-    EVENTPLACE_UPDATE: '/updateEventplace',
+    EVENTPLACE_UPDATE: '/updateEventPlace',
 
     ABOUT: '',
 

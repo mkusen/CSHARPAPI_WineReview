@@ -56,8 +56,7 @@ export default function WineGetById() {
            <Container>
                 <br />
                 <Stack gap={3} >
-                    <Row>
-                      
+                    <Row>                      
                             <Col key={wine.id}>
                                 <Card style={{ width: '18rem' }}>
                                     <Card.Body>
@@ -71,8 +70,7 @@ export default function WineGetById() {
                                         <Card.Link onClick={()=>DeleteWine(wine.id)}>Obriši</Card.Link>
                                     </Card.Body>
                                 </Card>
-                            </Col>
-                     
+                            </Col>                     
                     </Row>
                 </Stack>
             </Container>

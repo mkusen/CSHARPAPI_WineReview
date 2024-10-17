@@ -24,9 +24,18 @@ const navigate = useNavigate();
             navbarScroll
           >
             <Nav.Link onClick={()=>navigate(RoutesNames.HOME)}><strong>Wine Review</strong></Nav.Link>
-            
-            <NavDropdown title="Vina" id="navbarScrollingDropdown"> 
+
+            <NavDropdown title="Događaj" id="navbarScrollingDropdown">              
+             <NavDropdown.Item onClick={()=>navigate(RoutesNames.EVENTPLACE_ADD)}>
+               Dodaj novi događaj
+             </NavDropdown.Item>
              
+             <NavDropdown.Item onClick={()=>navigate(RoutesNames.EVENTPLACE_GET_ALL)}>
+               Svi događaji
+             </NavDropdown.Item>
+           </NavDropdown>
+            
+            <NavDropdown title="Vina" id="navbarScrollingDropdown">              
              <NavDropdown.Item onClick={()=>navigate(RoutesNames.WINE_ADD)}>
                Dodaj novo vino
              </NavDropdown.Item>
@@ -36,8 +45,7 @@ const navigate = useNavigate();
              </NavDropdown.Item>
            </NavDropdown>
 
-            <NavDropdown title="Korisnici" id="navbarScrollingDropdown"> 
-             
+            <NavDropdown title="Korisnici" id="navbarScrollingDropdown">              
              <NavDropdown.Item onClick={()=>navigate(RoutesNames.REVIEWER_ADD)}>
                Dodaj novog recenzenta
              </NavDropdown.Item>
@@ -46,9 +54,9 @@ const navigate = useNavigate();
                Svi recenzenti
              </NavDropdown.Item>
            </NavDropdown>
-            <NavDropdown title="Zabava" id="navbarScrollingDropdown">   
-             
-              <NavDropdown.Item href="#cyclic">
+
+            <NavDropdown title="Zabava" id="navbarScrollingDropdown">  
+             <NavDropdown.Item href="#cyclic">
                 Ciklična tablica
               </NavDropdown.Item>
               
