@@ -7,7 +7,6 @@ import ReviewerService from "../../services/ReviewerService";
 import WineService from "../../services/WineService";
 import EventPlaceService from "../../services/EventPlaceService";
 import TastingService from "../../services/TastingService";
-import Service from '../../services/TastingService';
 
 export default function TastingAdd(){
     const navigate = useNavigate();
@@ -56,34 +55,27 @@ export default function TastingAdd(){
 
     async function addTasting(e) {
         showLoading();
-        const response = await Service.addTasting(e);
+        const response = await TastingService.addTasting(e);
         hideLoading();
-        if(response.error){
-            alert(response.message + " greška");
+        if(response.error){            
+            alert(response.message);
             return;
         }
-        navigate(RoutesNames.TASTING_GET_ALL);
-
-        
+        navigate(RoutesNames.TASTING_GET_ALL);        
     }
 
-    //2024-02-11T00:00:00
     function onSubmit(e){
         const timestamp = new Date();
         const eventDate = timestamp.toISOString();
-        console.log(eventDate);
         e.preventDefault();
         const data = new FormData(e.target);
-       
-        console.log(reviewerId + " rev id");
         addTasting({
                 review: data.get('review'),
                 eventDate: eventDate,
-                reviewerId: data.get(reviewerId),
-                wineId: data.get(wineId),
-                eventId: data.get(eventId)
+                reviewerId: parseInt(reviewerId),
+                wineId: parseInt(wineId),
+                eventId: parseInt(eventId)
         });
-
     }
 
 
@@ -94,7 +86,7 @@ export default function TastingAdd(){
                 <strong>Dodavanje nove recenzije</strong>
                 <Form onSubmit={onSubmit}>
                     <br />
-                    <Form.Group className='mb-3' controlId="reviewer">
+                    <Form.Group className='mb-3' controlId="reviewerId">
                         <Form.Label>Recenzent</Form.Label>
                         <Form.Select 
                         onChange={(e)=>{setReviewerId(e.target.value)}}>
@@ -106,7 +98,7 @@ export default function TastingAdd(){
                         </Form.Select>
                     </Form.Group>
 
-                    <Form.Group className='mb-3' controlId="wine">
+                    <Form.Group className='mb-3' controlId="wineId">
                         <Form.Label>Vino</Form.Label>
                         <Form.Select 
                         onChange={(e)=>{setWineId(e.target.value)}}>
@@ -118,7 +110,7 @@ export default function TastingAdd(){
                         </Form.Select>
                     </Form.Group>
 
-                    <Form.Group className='mb-3' controlId="event">
+                    <Form.Group className='mb-3' controlId="eventId">
                         <Form.Label>Restoran</Form.Label>
                         <Form.Select 
                         onChange={(e)=>{setEventId(e.target.value)}}>
