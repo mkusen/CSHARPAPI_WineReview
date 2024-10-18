@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useLoading from "../../hooks/useLoading";
 import TastingService from "../../services/TastingService";
-import { Card, Col, Container, Row, Stack} from "react-bootstrap";
+import { Button, Card, Col, Container, Row, Stack} from "react-bootstrap";
 
 
 export default function TastingGetAll() {
@@ -12,7 +12,7 @@ export default function TastingGetAll() {
     const WineById = (id) => window.location.href=`/wineById?id=${id}`;
     const ReviewerById = (id) => window.location.href=`/reviewerById?id=${id}`;
     const EventPlaceById = (id) => window.location.href=`/eventplaceById?id=${id}`;
-    
+    const TastingGetById =(id) => window.location.href=`/tastingById?id=${id}`;
   
 
     async function TastingGetAll() {  
@@ -53,6 +53,10 @@ export default function TastingGetAll() {
                                         </Card.Text>
                                         <Card.Link onClick={() => ReviewerById(t.reviewerId)}>{t.reviewerName}</Card.Link>
                                     </Card.Body>
+                                    <Button variant="primary" type="submit" className="narrow"
+                                    onClick={() => TastingGetById(t.id)}>
+                            Uredi recenziju
+                        </Button>
                                 </Card>
                             </Col>
                         ))}
