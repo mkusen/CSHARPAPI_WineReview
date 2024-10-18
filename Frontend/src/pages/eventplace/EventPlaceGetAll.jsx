@@ -44,8 +44,9 @@ export default function EventPlaceGetAll() {
     return (
         <>
             <Container>
-                <Stack gap={3} >
-                    <br/>
+                <br />
+                <h4>Svi restorani</h4>
+                <Stack gap={3} >                
                     <Row>
                         {eventplaces && eventplaces.map((e) => (
                             <Col key={e.id}>

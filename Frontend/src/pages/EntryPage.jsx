@@ -1,5 +1,5 @@
 import { Container} from 'react-bootstrap';
-import TastingGet from './tasting/TastingGet';
+import TastingGetAll from './tasting/TastingGetAll';
 
 
 
@@ -7,7 +7,7 @@ export default function EntryPage(){
     return(
         <>
             <Container>             
-                    <TastingGet />            
+                    <TastingGetAll />            
             </Container>
         </>
     )

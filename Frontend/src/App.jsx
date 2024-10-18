@@ -18,6 +18,10 @@ import EventPlaceGetAll from './pages/eventplace/EventPlaceGetAll';
 import EventPlaceGetById from './pages/eventplace/EventPlaceGetById';
 import EventPlaceAdd from './pages/eventplace/EventPlaceAdd';
 import EventPlaceUpdate from './pages/eventplace/EventPlaceUpdate';
+import TastingGetAll from './pages/tasting/TastingGetAll';
+import TastingGetById from './pages/tasting/TastingGetById';
+import TastingAdd from './pages/tasting/TastingAdd';
+import TastingUpdate from './pages/tasting/TastingUpdate';
 
 function App() {
  
@@ -52,6 +56,11 @@ function App() {
             <Route path={RoutesNames.EVENTPLACE_GET_BY_ID} element={<EventPlaceGetById />} />
             <Route path={RoutesNames.EVENTPLACE_ADD} element={<EventPlaceAdd />} />
             <Route path={RoutesNames.EVENTPLACE_UPDATE} element={<EventPlaceUpdate />} />
+
+            <Route path={RoutesNames.TASTING_GET_ALL} element={<TastingGetAll />} />
+            <Route path={RoutesNames.TASTING_GET_BY_ID} element={<TastingGetById />} />
+            <Route path={RoutesNames.TASTING_ADD} element={<TastingAdd />} />
+            <Route path={RoutesNames.TASTING_UPDATE} element={<TastingUpdate />} />
             
           </Routes>
 

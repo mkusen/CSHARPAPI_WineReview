@@ -27,7 +27,7 @@ async function getEventPlaces() {
                 return {error: false, message: response.data}
             })
             .catch(()=>{
-                return {error: true, message: 'Nije moguće obrisati događaj'}
+                return {error: true, message: 'Nije moguće obrisati restoran'}
             })
         
         }
@@ -46,7 +46,7 @@ async function getEventPlaces() {
                         }
                         return {error: true, message: messages}
                         default:
-                            return {error: true, message: 'Nije moguće dodati događaj'};
+                            return {error: true, message: 'Nije moguće dodati restoran'};
                             
         
                 }
@@ -74,7 +74,7 @@ async function getEventPlaces() {
                         }
                         return {error: true, message: messages}
                         default:
-                            return {error:true, message:'Nije moguće izmijeniti podatke o događaju'}
+                            return {error:true, message:'Nije moguće izmijeniti podatke o restoranu'}
                 }
             })
         }

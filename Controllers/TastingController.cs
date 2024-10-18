@@ -34,16 +34,12 @@ namespace CSHARPAPI_WineReview.Controllers
                     .Include(r => r.Reviewer)                
                     .Include(e => e.EventPlace)               
                     .Include(w => w.Wine);
-
-               
-                
-
+                             
                 // result mapped to DTO
                 return _mapper.Map<List<TastingDTORead>>(tasting);
             }
             catch (Exception e)
             {
-
                 return BadRequest(new { message = e.Message });
             }
 

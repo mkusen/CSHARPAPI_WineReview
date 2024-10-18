@@ -43,6 +43,7 @@ export default function WineGetAll() {
         <>
             <Container>
                 <br />
+                <h4>Sva vina</h4>
                 <Stack gap={3} >
                     <Row>
                         {wines && wines.map((w) => (

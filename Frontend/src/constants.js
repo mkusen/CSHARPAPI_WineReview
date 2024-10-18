@@ -17,6 +17,12 @@ export const RoutesNames = {
     EVENTPLACE_ADD: '/eventplace/addEventPlace',
     EVENTPLACE_UPDATE: '/updateEventPlace',
 
+    
+    TASTING_GET_ALL: '/tasting',
+    TASTING_GET_BY_ID: '/tastingById',
+    TASTING_ADD: '/tasting/addTasting',
+    TASTING_UPDATE: '/updateTasting',
+
     ABOUT: '',
 
     CYCLIC: '',

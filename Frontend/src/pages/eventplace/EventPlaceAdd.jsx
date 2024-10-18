@@ -36,7 +36,7 @@ export default function EventPlaceAdd(){
         <>
             <Container>
                 <br />
-                <strong> Dodaj novi događaj </strong>
+                <strong> Dodaj novi restoran </strong>
                 <Form onSubmit={onSubmit}>
                     <br />
                     <Form.Group controlId="country">

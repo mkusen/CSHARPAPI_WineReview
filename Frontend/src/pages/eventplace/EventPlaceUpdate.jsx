@@ -64,7 +64,7 @@ console.log(response);
             <Container>
 
                 <br />
-                <strong> Izmijeni postojeći događaj </strong>
+                <strong> Izmijeni postojeći restoran </strong>
                 <Form onSubmit={onSubmit}>
                     <br />
                     <Form.Group controlId="country">

@@ -13,7 +13,7 @@ export default function NavBarWineReview() {
 const navigate = useNavigate();
 
   return (
-  
+
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>        
         <Navbar.Toggle aria-controls="navbarScroll" />
@@ -23,15 +23,21 @@ const navigate = useNavigate();
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link onClick={()=>navigate(RoutesNames.HOME)}><strong>Wine Review</strong></Nav.Link>
+            <Nav.Link onClick={()=>navigate(RoutesNames.HOME)}><strong>Wine Review</strong></Nav.Link>  
 
-            <NavDropdown title="Događaj" id="navbarScrollingDropdown">              
+            <NavDropdown title="Recenzija" id="navbarScrollingDropdown">              
+             <NavDropdown.Item onClick={()=>navigate(RoutesNames.TASTING_ADD)}>
+               Dodaj novu recenziju
+             </NavDropdown.Item>
+             </NavDropdown>
+
+            <NavDropdown title="Restoran" id="navbarScrollingDropdown">              
              <NavDropdown.Item onClick={()=>navigate(RoutesNames.EVENTPLACE_ADD)}>
-               Dodaj novi događaj
+               Dodaj novi restoran
              </NavDropdown.Item>
              
              <NavDropdown.Item onClick={()=>navigate(RoutesNames.EVENTPLACE_GET_ALL)}>
-               Svi događaji
+               Svi restorani
              </NavDropdown.Item>
            </NavDropdown>
             
@@ -45,7 +51,7 @@ const navigate = useNavigate();
              </NavDropdown.Item>
            </NavDropdown>
 
-            <NavDropdown title="Korisnici" id="navbarScrollingDropdown">              
+            <NavDropdown title="Recenzenti" id="navbarScrollingDropdown">              
              <NavDropdown.Item onClick={()=>navigate(RoutesNames.REVIEWER_ADD)}>
                Dodaj novog recenzenta
              </NavDropdown.Item>
@@ -78,7 +84,7 @@ const navigate = useNavigate();
         </Navbar.Collapse>
       </Container>
     </Navbar>
-
+  
   );
 }
 

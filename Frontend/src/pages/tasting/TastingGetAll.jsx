@@ -4,18 +4,18 @@ import TastingService from "../../services/TastingService";
 import { Card, Col, Container, Row, Stack} from "react-bootstrap";
 
 
-export default function TastingGet() {
+export default function TastingGetAll() {
     const [tastings, setTastings] = useState();
-    //const[tasting, setTasting] =useState();
+    
     const { showLoading, hideLoading } = useLoading();
 
     const WineById = (id) => window.location.href=`/wineById?id=${id}`;
     const ReviewerById = (id) => window.location.href=`/reviewerById?id=${id}`;
     const EventPlaceById = (id) => window.location.href=`/eventplaceById?id=${id}`;
     
-    //const navigate = useNavigate();
+  
 
-    async function TastingGet() {  
+    async function TastingGetAll() {  
        
         await TastingService.getTastings()
             .then((response) => {                
@@ -26,22 +26,11 @@ export default function TastingGet() {
                
     }
 
-    // async function TastingById(id) {
-
-    //     await TastingService.getTastingByID(id)
-    //     .then((response)=>{
-    //         console.log(response);
-    //         console.log("id tasting " + id);
-    //         setTasting(response);
-    //     })
-    //     .catch((e)=>{console.log(e)});
-        
-    // }
 
     
     useEffect(() => { 
         showLoading();  
-        TastingGet(); 
+        TastingGetAll(); 
         hideLoading();  
     })
 
@@ -50,6 +39,7 @@ export default function TastingGet() {
         <>
             <Container>
             <br />
+                <h4>Sve recenzije</h4>      
                 <Stack gap={3} >
                     <Row>
                         {tastings && tastings.map((t) => (
