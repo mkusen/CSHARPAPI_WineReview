@@ -12,8 +12,8 @@ namespace CSHARPAPI_WineReview.Mapping
             //kada se koristi .ForCtorParam, potrebno je da broj svojstava (property) u osnovnoj i DTO klasi bude jednak
             CreateMap<Tasting, TastingDTORead>()
                 .ForCtorParam("WineName",
-                opt => opt.MapFrom(src => src.Wine.WineName + " " +
-                    src.Wine.Maker)) 
+                opt => opt.MapFrom(src => src.Wine.Maker + ", " +
+                    src.Wine.WineName)) 
                 .ForCtorParam("WineId",
                 opt=>opt.MapFrom(src=>src.Wine.Id))
                 .ForCtorParam("ReviewerName",

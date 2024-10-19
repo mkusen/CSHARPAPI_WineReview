@@ -1,6 +1,9 @@
 .right{
   text-align: right;
 }
+.left{
+  text-align: left;
+}
 .middle{
   text-align: center;
 }
@@ -8,8 +11,13 @@
   width: 100%;
 }
 .narrow{
-  width: 50%;
-  
+  width: 50%; 
+}
+.colorBlue{
+  color: blue;
+}
+.colorRed{
+  color: red;
 }
 .app{
   min-height: 500px;

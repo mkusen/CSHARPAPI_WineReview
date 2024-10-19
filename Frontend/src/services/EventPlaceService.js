@@ -27,7 +27,7 @@ async function getEventPlaces() {
                 return {error: false, message: response.data}
             })
             .catch(()=>{
-                return {error: true, message: 'Nije moguće obrisati restoran'}
+                return {error: true, message: 'Restoran nije moguće obrisati'}
             })
         
         }
