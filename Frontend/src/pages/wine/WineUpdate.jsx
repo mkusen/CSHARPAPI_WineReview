@@ -65,7 +65,7 @@ export default function WineUpdate(){
             <Container>
 
                 <br />
-                <strong> Izmijeni postojeće vino </strong>
+                <strong> Promijeni postojeće vino </strong>
                 <Form onSubmit={onSubmit}>
                     <br />
                     <Form.Group controlId="maker">
@@ -96,8 +96,8 @@ export default function WineUpdate(){
                             </Link>
                         </Col>
                         <Col xs={6} sm={6} md={9} lg={6} xl={6} xxl={6}>
-                            <Button variant="primary" type="submit" className="siroko">
-                                Izmijeni
+                            <Button variant="primary" type="submit" className="buttonPosition">
+                               Promijeni
                             </Button>
                         </Col>
                     </Row>

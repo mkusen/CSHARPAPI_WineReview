@@ -136,7 +136,7 @@ export default function TastingAdd(){
                             </Link>
                         </Col>
                         <Col xs={6} sm={6} md={9} lg={6} xl={6} xxl={6}>
-                            <Button variant="primary" type="submit" className="siroko">
+                            <Button variant="primary" type="submit" className="buttonPosition">
                                 Dodaj novi događaj
                             </Button>
                         </Col>

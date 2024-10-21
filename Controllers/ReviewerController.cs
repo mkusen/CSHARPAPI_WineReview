@@ -159,7 +159,7 @@ namespace CSHARPAPI_WineReview.Controllers
 
         [HttpGet]
         [Route("getPages/{page}")]
-        public IActionResult GetReviewerPages(int page, string condition = "")
+        public IActionResult GetPages(int page, string condition = "")
         {
             var byPage = 4;
             condition= condition.ToLower();
@@ -170,7 +170,6 @@ namespace CSHARPAPI_WineReview.Controllers
                     || EF.Functions.Like(r.LastName.ToLower(), "%" + condition + "%"))
                     .Skip((byPage * page) - byPage)
                     .Take(byPage)
-                    .OrderBy(r => r.LastName)
                     .ToList();
 
                 return Ok(_mapper.Map<List<ReviewerDTORead>>(reviewers));

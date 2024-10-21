@@ -68,7 +68,7 @@ export default function TastingUpdate(){
         <>
         <Container>
             <br />
-            <strong><h2>Izmijeni recenziju</h2></strong>
+            <strong><h2>Uredi recenziju</h2></strong>
             <Form onSubmit={onSubmit}>
                 <br />
                    <strong><Form.Label><h5 className="colorBlue">Recenzent:</h5> {tasting.reviewerName}</Form.Label></strong> 
@@ -89,8 +89,8 @@ export default function TastingUpdate(){
                         </Link>
                     </Col>
                     <Col xs={6} sm={6} md={9} lg={6} xl={6} xxl={6}>
-                        <Button variant="primary" type="submit">
-                            Izmijeni recenziju
+                        <Button variant="primary" type="submit" className="buttonPosition">
+                            Uredi recenziju
                         </Button>
                     </Col>
                 </Row>

@@ -31,7 +31,9 @@ body{
 .button{
   text-decoration-color: white;
 }
-
+.buttonPosition{
+  float: right;
+}
 
 .loading-spinner-overlay {
   position: absolute;

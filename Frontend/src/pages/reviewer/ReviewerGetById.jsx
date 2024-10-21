@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ReviewerService from "../../services/ReviewerService";
 import useLoading from "../../hooks/useLoading";
-import { Card, Col, Container } from "react-bootstrap";
+import { Button, Card, Col, Container } from "react-bootstrap";
 
 
 export default function ReviewerGetById() {
@@ -55,8 +55,8 @@ export default function ReviewerGetById() {
                         <Card.Body>
                             <Card.Title>{reviewer.firstName} {reviewer.lastName}</Card.Title>
                             <Card.Subtitle className="mb-2 text-muted">{reviewer.email}</Card.Subtitle>
-                            <Card.Link onClick={()=>UpdateReviewer(reviewer.id)}>Promijeni</Card.Link>
-                            <Card.Link onClick={()=>DeleteReviewer(reviewer.id)}>Obriši</Card.Link>
+                            <Button variant="outline-light" size="md"   onClick={()=>UpdateReviewer(reviewer.id)}>Promijeni</Button>
+                            <Button variant="outline-danger" size="md" className="buttonPosition"  onClick={()=>DeleteReviewer(reviewer.id)}>Obriši</Button>
                         </Card.Body>
                     </Card>  
                     </Col>

@@ -3,7 +3,7 @@ import EventPlaceService from "../../services/EventPlaceService";
 import { useNavigate } from "react-router-dom";
 import useLoading from "../../hooks/useLoading";
 import { RoutesNames } from "../../constants";
-import { Card, Col, Container, Row, Stack } from "react-bootstrap";
+import { Button, Card, Col, Container, Row, Stack } from "react-bootstrap";
 
 
 
@@ -63,8 +63,8 @@ export default function EventPlaceGetById(){
                                             {eventplace.country} <br /> {eventplace.city}
                                             <br /> {eventplace.eventName}
                                         </Card.Text>                                        
-                                        <Card.Link onClick={()=>UpdateEventPlace(eventplace.id)}>Promijeni</Card.Link>
-                                        <Card.Link onClick={()=>DeleteEventPlace(eventplace.id)}>Obriši</Card.Link>
+                                        <Button variant="outline-light" size="md"  onClick={()=>UpdateEventPlace(eventplace.id)}>Promijeni</Button>
+                                        <Button variant="outline-danger" size="md" className="buttonPosition"  onClick={()=>DeleteEventPlace(eventplace.id)}>Obriši</Button>
                                     </Card.Body>
                                 </Card>
                             </Col>                     

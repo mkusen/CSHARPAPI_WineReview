@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useLoading from "../../hooks/useLoading";
 import ReviewerService from "../../services/ReviewerService";
-import { Card, Col, Container, Row, Stack } from "react-bootstrap";
+import { Button, Card, Col, Container, Pagination, Row, Stack } from "react-bootstrap";
 
 export default function ReviewerGetAll() {
 
@@ -9,15 +9,24 @@ export default function ReviewerGetAll() {
 
     const [reviewers, setReviewers] = useState();
     const { showLoading, hideLoading } = useLoading();
+    const [page, setPage] = useState(1);
+    const [condition, setCondition] = useState('');
 
 
     async function ReviewersGet() {  
-        await ReviewerService.getReviewers()      
-            .then((response) => {
-                setReviewers(response);
-                console.log(response);              
-            })
-            .catch((e) => { console.log(e) });
+        showLoading();
+        const response = await ReviewerService.getPages(page, condition);
+        hideLoading();
+        if (response.error) {
+            alert('Nije moguće dohvatiti podatke');
+            return;
+        }
+        if (response.message.length == 0) {
+            setPage(page - 1);
+            return;
+        }
+        setReviewers(response.message);
+        hideLoading();  
       
     }
 
@@ -33,11 +42,29 @@ export default function ReviewerGetAll() {
 
     }
 
+    function changeCondition(e) {
+        if (e.nativeEvent.key == "Enter") {
+            setPage(1);
+            setCondition(e.nativeEvent.srcElement.value);
+        }
+    }
+
+     function nextPage() {
+        setPage(page + 1);
+      }
+    
+      function previousPage() {
+        if(page==1){
+            return;
+        } 
+        setPage(page - 1);
+      }    
+
     useEffect(() => {
         showLoading();
         ReviewersGet();     
         hideLoading();
-    }, []);
+    }, [page, condition]);
 
 
     return (
@@ -45,6 +72,15 @@ export default function ReviewerGetAll() {
             <Container>
                 <br />
                 <h4>Svi recenzenti</h4>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                    <Pagination size="md" position="center">
+                                <Pagination.Prev onClick={previousPage} />
+                                <Pagination.Item disabled>{page}</Pagination.Item> 
+                                <Pagination.Next
+                                    onClick={nextPage}
+                                />
+                            </Pagination>
+                         </div>
                 <Stack gap={3} >        
                     <Row>                      
                         {reviewers && reviewers.map((r) => (
@@ -53,8 +89,8 @@ export default function ReviewerGetAll() {
                                     <Card.Body>
                                         <Card.Title>{r.firstName} {r.lastName}</Card.Title>
                                         <Card.Subtitle className="mb-2 text-muted">{r.email}</Card.Subtitle>
-                                        <Card.Link onClick={()=>UpdateReviewer(r.id)}>Promijeni</Card.Link>
-                                        <Card.Link onClick={()=>DeleteReviewer(r.id)}>Obriši</Card.Link>
+                                        <Button variant="outline-light" size="md"  onClick={()=>UpdateReviewer(r.id)}>Promijeni</Button>
+                                        <Button variant="outline-danger" size="md" className="buttonPosition"  onClick={()=>DeleteReviewer(r.id)}>Obriši</Button>
                                     </Card.Body>
                                 </Card>
                             </Col>

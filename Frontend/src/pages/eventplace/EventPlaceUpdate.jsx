@@ -62,7 +62,7 @@ export default function EventPlaceUpdate(){
             <Container>
 
                 <br />
-                <strong> Izmijeni postojeći restoran </strong>
+                <strong> Promijeni postojeći restoran </strong>
                 <Form onSubmit={onSubmit}>
                     <br />
                     <Form.Group controlId="country">
@@ -93,8 +93,8 @@ export default function EventPlaceUpdate(){
                             </Link>
                         </Col>
                         <Col xs={6} sm={6} md={9} lg={6} xl={6} xxl={6}>
-                            <Button variant="primary" type="submit" className="siroko">
-                                Izmijeni
+                            <Button variant="primary" type="submit" className="buttonPosition">
+                                Promijeni
                             </Button>
                         </Col>
                     </Row>

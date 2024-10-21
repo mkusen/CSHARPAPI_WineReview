@@ -53,11 +53,11 @@ async function getEventPlaces() {
             })
         }
         
-        // async function getPages(page, condition) {
-        //     return await HttpService.get('/Reviewer/getPages/' + page + '?condition=' + condition) 
-        //     .then((response)=>{return {error: false, message: response.data};})
-        //     .catch(()=>{return {error:true, message: 'Nije moguće dohvatiti korisnike'}})
-        // }
+        async function getPages(page, condition) {
+            return await HttpService.get('/EventPlaces/getPages/' + page + '?condition=' + condition) 
+            .then((response)=>{return {error: false, message: response.data};})
+            .catch(()=>{return {error:true, message: 'Nije moguće dohvatiti restorane'}})
+        }
         
         async function updateEventPlace(id, EventPlace) {
                      
@@ -87,5 +87,6 @@ getEventPlaces,
 getEventPlaceById,
 deleteEventPlace,
 addEventPlace,
-updateEventPlace    
+updateEventPlace,
+getPages    
 }

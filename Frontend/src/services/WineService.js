@@ -54,11 +54,11 @@ async function addWine(Wine) {
     })
 }
 
-// async function getPages(page, condition) {
-//     return await HttpService.get('/Reviewer/getPages/' + page + '?condition=' + condition) 
-//     .then((response)=>{return {error: false, message: response.data};})
-//     .catch(()=>{return {error:true, message: 'Nije moguće dohvatiti korisnike'}})
-// }
+async function getPages(page, condition) {
+    return await HttpService.get('/Wine/getPages/' + page + '?condition=' + condition) 
+    .then((response)=>{return {error: false, message: response.data};})
+    .catch(()=>{return {error:true, message: 'Nije moguće dohvatiti korisnike'}})
+}
 
 async function updateWine(id, Wine) {
 console.log("id: " + id + "wine: "+ Wine);
@@ -87,5 +87,6 @@ export default{
     getWineById,
     deleteWine,
     addWine,
-    updateWine
+    updateWine,
+    getPages
 }

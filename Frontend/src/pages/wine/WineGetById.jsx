@@ -3,7 +3,7 @@ import useLoading from "../../hooks/useLoading";
 import { useNavigate } from "react-router-dom";
 import WineService from "../../services/WineService";
 import { RoutesNames } from "../../constants";
-import { Card, Col, Container, Row, Stack } from "react-bootstrap";
+import { Button, Card, Col, Container, Row, Stack } from "react-bootstrap";
 
 
 
@@ -66,8 +66,8 @@ export default function WineGetById() {
                                             <br /> {"Cijena: " + wine.price + " €"}
                                         </Card.Text>
                                         
-                                        <Card.Link onClick={()=>UpdateWine(wine.id)}>Promijeni</Card.Link>
-                                        <Card.Link onClick={()=>DeleteWine(wine.id)}>Obriši</Card.Link>
+                                        <Button variant="outline-light" size="md" onClick={()=>UpdateWine(wine.id)}>Promijeni</Button>
+                                        <Button variant="outline-danger" size="md" className="buttonPosition" onClick={()=>DeleteWine(wine.id)}>Obriši</Button>
                                     </Card.Body>
                                 </Card>
                             </Col>                     
