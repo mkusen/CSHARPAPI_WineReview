@@ -26,8 +26,6 @@ export default function TastingGetAll() {
 
     }
 
-
-
     useEffect(() => {
         showLoading();
         TastingGetAll();
@@ -37,7 +35,8 @@ export default function TastingGetAll() {
 
     return (
         <>
-            <Container>
+        <body>
+            <Container >
                 <br />
                 <h4>Sve recenzije</h4>
                 <Stack gap={3} >
@@ -46,11 +45,11 @@ export default function TastingGetAll() {
                             <Col key={t.id}>
                                 <Card style={{ width: '16rem' }}>
                                     <Card.Body>
-                                        <Button variant="outline-primary" size="md" onClick={() => WineById(t.wineId)}>{t.wineName}</Button>
-                                        <Button variant="outline-primary" size="md" onClick={() => EventPlaceById(t.eventId)}>{t.eventName}</Button>
-                                        <Button variant="outline-primary" size="md" onClick={() => ReviewerById(t.reviewerId)}>{t.reviewerName}</Button>
-                                        <Card.Text className="middle">  <br /> {t.review}</Card.Text>
-                                        <Button variant="outline-primary" type="submit" size="md" className="d-grid gap-2"
+                                        <Button variant="outline-light" size="md" onClick={() => WineById(t.wineId)}>{t.wineName}</Button>
+                                        <Button variant="outline-light" size="md" onClick={() => EventPlaceById(t.eventId)}>{t.eventName}</Button>
+                                        <Button variant="outline-light" size="md" onClick={() => ReviewerById(t.reviewerId)}>{t.reviewerName}</Button>
+                                        <Card.Text >  <br /> {t.review}</Card.Text>
+                                        <Button variant="outline-light" type="submit" size="md" className="d-grid gap-2"
                                             onClick={() => TastingGetById(t.id)}>
                                             Uredi recenziju
                                         </Button>
@@ -62,8 +61,8 @@ export default function TastingGetAll() {
                         ))}
                     </Row>
                 </Stack>
-
             </Container>
+            </body>
         </>
     )
 

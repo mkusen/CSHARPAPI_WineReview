@@ -22,6 +22,15 @@
 .app{
   min-height: 500px;
 }
+.card{
+  background-color: cadetblue;
+}
+body{
+  background-color: silver;
+}
+.button{
+  text-decoration-color: white;
+}
 
 
 .loading-spinner-overlay {

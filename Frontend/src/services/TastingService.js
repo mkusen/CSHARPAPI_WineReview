@@ -52,11 +52,11 @@ async function addTasting(Tasting) {
     })
 }
 
-// async function getPages(page, condition) {
-//     return await HttpService.get('/Reviewer/getPages/' + page + '?condition=' + condition) 
-//     .then((response)=>{return {error: false, message: response.data};})
-//     .catch(()=>{return {error:true, message: 'Nije moguće dohvatiti korisnike'}})
-// }
+async function getPages(page, condition) {
+    return await HttpService.get('/Tasting/getPages/' + page + '?condition=' + condition) 
+    .then((response)=>{return {error: false, message: response.data};})
+    .catch(()=>{return {error:true, message: 'Nije moguće dohvatiti recenzije'}})
+}
 
 async function updateTasting(id, Tasting) {
              
@@ -87,5 +87,6 @@ getTastings,
 getTastingByID,
 deleteTasting,
 addTasting,
-updateTasting
+updateTasting,
+getPages
 }
