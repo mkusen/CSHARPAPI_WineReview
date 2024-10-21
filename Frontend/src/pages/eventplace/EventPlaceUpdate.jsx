@@ -21,7 +21,6 @@ export default function EventPlaceUpdate(){
         showLoading();
         const response = await EventPlaceService.getEventPlaceById(id);     
         hideLoading();
-console.log(response);
         if(response.error){
             alert(response.message);
             return;
@@ -38,7 +37,6 @@ console.log(response);
             alert(response.message);
             return;
         }
-
         navigate(RoutesNames.EVENTPLACE_GET_ALL);
     }
 

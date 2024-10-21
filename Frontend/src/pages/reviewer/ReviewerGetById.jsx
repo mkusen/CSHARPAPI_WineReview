@@ -35,8 +35,7 @@ export default function ReviewerGetById() {
         if(response.error){
          alert(response.message);
          return;
-        }
-      
+        }     
  
      }
 
