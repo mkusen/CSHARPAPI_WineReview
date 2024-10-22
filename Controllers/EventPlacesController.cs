@@ -63,7 +63,6 @@ namespace CSHARPAPI_WineReview.Controllers
             }
 
             return Ok(_mapper.Map<EventPlaceDTORead>(e));
-
         }
 
         /// <summary>
@@ -84,10 +83,9 @@ namespace CSHARPAPI_WineReview.Controllers
             //creates new entry in EventPlace table
             try
             {
-
                 e = _mapper.Map<EventPlace>(dto);
                 _context.EventPlaces.Add(e);
-                
+
                 _context.SaveChanges();
                 return StatusCode(StatusCodes.Status201Created, _mapper.Map<EventPlace>(e));
             }
@@ -127,7 +125,6 @@ namespace CSHARPAPI_WineReview.Controllers
 
             _context.SaveChanges();
             return StatusCode(StatusCodes.Status201Created, new { message = "Uspješno promijenjeno", eventplace = _mapper.Map<EventPlace>(e) });
-
         }
 
         /// <summary>
@@ -160,6 +157,12 @@ namespace CSHARPAPI_WineReview.Controllers
             return Ok(new { message = "Uspješno obrisano" });
         }
 
+        /// <summary>
+        /// Get paginated event places based on a condition.
+        /// </summary>
+        /// <param name="page">The page number to retrieve.</param>
+        /// <param name="condition">The condition to filter event places.</param>
+        /// <returns>A list of event places for the specified page.</returns>
         [HttpGet]
         [Route("getPages/{page}")]
         public IActionResult GetPages(int page, string condition = "")
@@ -179,7 +182,6 @@ namespace CSHARPAPI_WineReview.Controllers
             }
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
             }
         }

@@ -10,10 +10,9 @@ namespace CSHARPAPI_WineReview.Controllers
 
     [ApiController]
     [Route("api/v1/[controller]")]
-
-    //dependency injection
-    public class TastingController(WineReviewContext context, IMapper mapper) : WineReviewController(context, mapper)
+    public class TastingController : WineReviewController
     {
+        public TastingController(WineReviewContext context, IMapper mapper) : base(context, mapper) { }
 
         /// <summary>
         /// Get all tastings from the table.
@@ -25,26 +24,20 @@ namespace CSHARPAPI_WineReview.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(new { message = ModelState });
-
             }
             try
             {
-                // DB query for retrieve data
                 var tasting = _context.Tastings
-                    .Include(r => r.Reviewer)                
-                    .Include(e => e.EventPlace)               
+                    .Include(r => r.Reviewer)
+                    .Include(e => e.EventPlace)
                     .Include(w => w.Wine);
-                             
-                // result mapped to DTO
                 return _mapper.Map<List<TastingDTORead>>(tasting);
             }
             catch (Exception e)
             {
                 return BadRequest(new { message = e.Message });
             }
-
         }
-
 
         /// <summary>
         /// Get a tasting by ID from the table.
@@ -63,9 +56,8 @@ namespace CSHARPAPI_WineReview.Controllers
             Tasting? t;
             try
             {
-                // DB query for retrieve data by ID
                 t = _context.Tastings
-                 .Include(r => r.Reviewer)
+                    .Include(r => r.Reviewer)
                     .Include(e => e.EventPlace)
                     .Include(w => w.Wine)
                     .FirstOrDefault(t => t.Id == id);
@@ -78,57 +70,50 @@ namespace CSHARPAPI_WineReview.Controllers
             {
                 return NotFound(new { message = "Recenzija ne postoji" });
             }
-            // result mapped to DTO
             return Ok(_mapper.Map<TastingDTORead>(t));
         }
 
         /// <summary>
         /// Create a new tasting entry in the table.
         /// </summary>
-        /// <param name="tasting">The tasting to create.</param>
+        /// <param name="dto">The tasting to create.</param>
         /// <returns>The created tasting.</returns>
         [HttpPost]
         public IActionResult Post(TastingDTOInsertUpdate dto)
         {
-
             if (!ModelState.IsValid)
             {
-                return BadRequest(new {message= ModelState});   
+                return BadRequest(new { message = ModelState });
             }
 
-            //get wine by ID
             Wine? w;
             try
             {
-                w = _context.Wines.Find(dto.WineId);            
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new {message= ex.Message});
-            }
-            if (w == null)
-            {
-                return NotFound(new { message = "Vino ne postoji u bazi" });
-
-            }
-
-            //get EventPlace by ID
-            EventPlace? e;
-            try
-            {
-                e = _context.EventPlaces.Find(dto.EventId);            
+                w = _context.Wines.Find(dto.WineId);
             }
             catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
+            if (w == null)
+            {
+                return NotFound(new { message = "Vino ne postoji u bazi" });
+            }
 
+            EventPlace? e;
+            try
+            {
+                e = _context.EventPlaces.Find(dto.EventId);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
             if (e == null)
             {
                 return NotFound(new { message = "Događaj ne postoji u bazi" });
             }
 
-            //get Reviewer by ID
             Reviewer? r;
             try
             {
@@ -143,7 +128,6 @@ namespace CSHARPAPI_WineReview.Controllers
                 return NotFound(new { message = "Recenzent ne postoji u bazi" });
             }
 
-            //creates new entry in Tasting table
             try
             {
                 var t = _mapper.Map<Tasting>(dto);
@@ -158,35 +142,31 @@ namespace CSHARPAPI_WineReview.Controllers
             {
                 return BadRequest(new { message = ex.Message });
             }
-
         }
 
         /// <summary>
         /// Update an existing tasting entry in the table.
         /// </summary>
         /// <param name="id">The ID of the tasting to update.</param>
-        /// <param name="tasting">The updated tasting data.</param>
+        /// <param name="dto">The updated tasting data.</param>
         /// <returns>A status indicating the result of the update.</returns>
         [HttpPut("{id:int}")]
         [Produces("application/json")]
         public IActionResult Put(int id, TastingDTOInsertUpdate dto)
         {
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(new { message = ModelState });
             }
 
-            //updates existing entry retrieve by ID in Tasting table
             Tasting? t;
             try
             {
-                t= _context.Tastings.FirstOrDefault(t=>t.Id== id);
-               
+                t = _context.Tastings.FirstOrDefault(t => t.Id == id);
             }
             catch (Exception ex)
             {
-                return BadRequest(new {message= ex.Message});
+                return BadRequest(new { message = ex.Message });
             }
             if (t == null)
             {
@@ -198,7 +178,6 @@ namespace CSHARPAPI_WineReview.Controllers
             _context.SaveChanges();
 
             return Ok(new { message = "Uspješno promijenjeno" });
-            
         }
 
         /// <summary>
@@ -216,7 +195,6 @@ namespace CSHARPAPI_WineReview.Controllers
                 return NotFound(new { message = "Podatak nije pronađen" });
             }
 
-            //unable to delete data - handle 500 internal server error
             try
             {
                 _context.Tastings.Remove(tasting);
@@ -224,13 +202,18 @@ namespace CSHARPAPI_WineReview.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    new { message = "nije obrisano" });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "nije obrisano" });
             }
 
             return Ok(new { message = "Uspješno obrisano" });
         }
 
+        /// <summary>
+        /// Get tastings by page with optional condition.
+        /// </summary>
+        /// <param name="page">The page number.</param>
+        /// <param name="condition">The optional condition to filter tastings.</param>
+        /// <returns>A list of tastings for the specified page.</returns>
         [HttpGet]
         [Route("getPages/{page}")]
         public IActionResult GetPages(int page, string condition = "")
@@ -243,12 +226,10 @@ namespace CSHARPAPI_WineReview.Controllers
                     .Include(r => r.Reviewer)
                     .Include(e => e.EventPlace)
                     .Include(w => w.Wine)
-                   .Where(r => EF.Functions.Like(r.Review.ToLower(), "%" + condition + "%"))
+                    .Where(r => EF.Functions.Like(r.Review.ToLower(), "%" + condition + "%"))
                     .Skip((byPage * page) - byPage)
                     .Take(byPage)
                     .ToList();
-
-            
 
                 return Ok(_mapper.Map<List<TastingDTORead>>(tastings));
             }
@@ -257,6 +238,5 @@ namespace CSHARPAPI_WineReview.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
     }
 }
