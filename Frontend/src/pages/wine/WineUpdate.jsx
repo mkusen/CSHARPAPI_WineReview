@@ -65,7 +65,7 @@ export default function WineUpdate(){
             <Container>
 
                 <br />
-                <strong> Promijeni postojeće vino </strong>
+                <strong><h5> Promijeni postojeće vino </h5></strong>
                 <Form onSubmit={onSubmit}>
                     <br />
                     <Form.Group controlId="maker">

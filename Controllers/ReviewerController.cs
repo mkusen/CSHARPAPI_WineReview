@@ -157,6 +157,9 @@ namespace CSHARPAPI_WineReview.Controllers
         [Route("getPages/{page}")]
         public IActionResult GetPages(int page, string condition = "")
         {
+
+            var byPage = 4;
+            condition = condition.ToLower();
             if (!ModelState.IsValid)
             {
                 return BadRequest(new { message = ModelState });
@@ -165,8 +168,8 @@ namespace CSHARPAPI_WineReview.Controllers
             {
                 var reviewers = _context.Reviewers
                     .Where(r => string.IsNullOrEmpty(condition) || r.FirstName.Contains(condition) || r.LastName.Contains(condition))
-                    .Skip((page - 1) * 10)
-                    .Take(10)
+                     .Skip((byPage * page) - byPage)
+                    .Take(byPage)
                     .ToList();
                 return Ok(_mapper.Map<List<ReviewerDTORead>>(reviewers));
             }

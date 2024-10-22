@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import EventPlaceService from "../../services/EventPlaceService";
 import useLoading from "../../hooks/useLoading";
-import { Button, Card, Col, Container, Pagination, Row, Stack } from "react-bootstrap";
+import { Button, Card, Col, Container, Form, Pagination, Row, Stack } from "react-bootstrap";
 
 
 export default function EventPlaceGetAll() {
@@ -58,6 +58,15 @@ export default function EventPlaceGetAll() {
         setPage(page - 1);
       }    
 
+      function Search(e) {
+        if(e.nativeEvent.key == "Enter"){
+            console.log('Enter')
+            setPage(1);
+            setCondition(e.nativeEvent.srcElement.value);
+            setEventPlaces([]);
+             
+        }
+    }
 
     useEffect(() => {       
         EventPlacesGet();
@@ -68,6 +77,19 @@ export default function EventPlaceGetAll() {
             <Container>
                 <br />
                 <h4>Svi restorani</h4>
+                <Col key={1} sm={12} lg={4} md={4}>           
+            <Form.Control
+               type='text'
+               name='searchbar'
+               placeholder='unosite slova za pretragu [Enter]' 
+               maxLength={255}
+               defaultValue='' 
+               onKeyUp={Search} 
+                
+            />         
+           </Col> 
+
+
                 <div style={{ display: "flex", justifyContent: "center" }}>
                     <Pagination size="md" position="center">
                                 <Pagination.Prev onClick={previousPage} />

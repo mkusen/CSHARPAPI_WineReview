@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useLoading from "../../hooks/useLoading";
 import ReviewerService from "../../services/ReviewerService";
-import { Button, Card, Col, Container, Pagination, Row, Stack } from "react-bootstrap";
+import { Button, Card, Col, Container, Form, Pagination, Row, Stack } from "react-bootstrap";
 
 export default function ReviewerGetAll() {
 
@@ -58,7 +58,17 @@ export default function ReviewerGetAll() {
             return;
         } 
         setPage(page - 1);
-      }    
+      } 
+      
+      function Search(e) {
+        if(e.nativeEvent.key == "Enter"){
+            console.log('Enter')
+            setPage(1);
+            setCondition(e.nativeEvent.srcElement.value);
+            setReviewers([]);
+             
+        }
+    }
 
     useEffect(() => {
         showLoading();
@@ -72,6 +82,17 @@ export default function ReviewerGetAll() {
             <Container>
                 <br />
                 <h4>Svi recenzenti</h4>
+                <Col key={1} sm={12} lg={4} md={4}>           
+            <Form.Control
+               type='text'
+               name='searchbar'
+               placeholder='unosite slova za pretragu [Enter]' 
+               maxLength={255}
+               defaultValue='' 
+               onKeyUp={Search} 
+                
+            />         
+           </Col> 
                 <div style={{ display: "flex", justifyContent: "center" }}>
                     <Pagination size="md" position="center">
                                 <Pagination.Prev onClick={previousPage} />

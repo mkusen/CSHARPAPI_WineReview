@@ -57,7 +57,7 @@ async function addWine(Wine) {
 async function getPages(page, condition) {
     return await HttpService.get('/Wine/getPages/' + page + '?condition=' + condition) 
     .then((response)=>{return {error: false, message: response.data};})
-    .catch(()=>{return {error:true, message: 'Nije moguće dohvatiti korisnike'}})
+    .catch(()=>{return {error:true, message: 'Nije moguće dohvatiti podatke o vinima'};})
 }
 
 async function updateWine(id, Wine) {

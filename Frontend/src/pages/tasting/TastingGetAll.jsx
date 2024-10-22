@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useLoading from "../../hooks/useLoading";
 import TastingService from "../../services/TastingService";
-import { Button, Card, Col, Container, Pagination, Row, Stack } from "react-bootstrap";
+import { Button, Card, Col, Container, Form, Pagination, Row, Stack } from "react-bootstrap";
 
 
 export default function TastingGetAll() {
@@ -52,6 +52,8 @@ export default function TastingGetAll() {
         setPage(page - 1);
       }
 
+      
+    
     useEffect(() => {
         TastingGetAll();
     }, [page, condition]);
@@ -63,6 +65,8 @@ export default function TastingGetAll() {
                 <Container >
                     <br />
                     <h4>Sve recenzije</h4>
+
+          
                     <div style={{ display: "flex", justifyContent: "center" }}>
                     <Pagination size="md" position="center">
                                 <Pagination.Prev onClick={previousPage} />
