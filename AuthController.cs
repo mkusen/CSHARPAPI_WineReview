@@ -1,4 +1,4 @@
-﻿using CSHARPAPI_WineReview.Data;
+using CSHARPAPI_WineReview.Data;
 using CSHARPAPI_WineReview.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,9 +17,14 @@ namespace CSHARPAPI_WineReview.Controllers
     /// <param name="context">The database context.</param>
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class AuthController(WineReviewContext context) : ControllerBase
+    public class AuthController : ControllerBase
     {
-        private readonly WineReviewContext _context = context;
+        private readonly WineReviewContext _context;
+
+        public AuthController(WineReviewContext context)
+        {
+            _context = context;
+        }
 
         /// <summary>
         /// Generates a JWT token for the given operator.
@@ -38,14 +43,14 @@ namespace CSHARPAPI_WineReview.Controllers
                    .FirstOrDefault();
             if (user == null)
             {
-                return StatusCode(StatusCodes.Status403Forbidden, "Niste autorizirani, ne mogu naći korisnika");
+                return StatusCode(StatusCodes.Status403Forbidden, "Niste autorizirani, ne mogu na?i korisnika");
             }
             if (!BCrypt.Net.BCrypt.Verify(reviewer.Pass, user.Pass))
             {
                 return StatusCode(StatusCodes.Status403Forbidden, "Niste autorizirani, lozinka ne odgovara");
             }
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes("MojKljucKojijeJakoTajan i dovoljno dugačak da se može koristiti");
+            var key = Encoding.UTF8.GetBytes("MojKljucKojijeJakoTajan i dovoljno duga?ak da se mo�e koristiti");
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Expires = DateTime.UtcNow.Add(TimeSpan.FromHours(8)),
