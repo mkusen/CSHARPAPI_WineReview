@@ -12,8 +12,8 @@ export default function WineAdd(){
     const { showLoading, hideLoading } = useLoading();
 
     async function addWine(e) {
+        console.log(e)
         showLoading();
-        const response = await WineService.addWine(e);
         hideLoading();
         if(response.error){
             alert(response.message);
@@ -25,6 +25,7 @@ export default function WineAdd(){
     function onSubmit(e){
         e.preventDefault();
         const data = new FormData(e.target);
+        
         addWine({
                 maker: data.get('maker'),
                 price: data.get('price'),
@@ -49,7 +50,7 @@ export default function WineAdd(){
 
                     <Form.Group controlId="price">
                         <Form.Label>Cijena</Form.Label>
-                        <Form.Control type="decimal" name="price"/>
+                        <Form.Control type="decimal" name="price" step={0.01} defaultValue={0}/>
                     </Form.Group>
 
                     <Form.Group controlId="wineName">

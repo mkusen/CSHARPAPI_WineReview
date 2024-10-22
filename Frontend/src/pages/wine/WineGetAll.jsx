@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import WineService from "../../services/WineService";
-import { Button, Card, Col, Container, Pagination, Row, Stack } from "react-bootstrap";
+import { Button, Card, Col, Container, Form, Pagination, Row, Stack } from "react-bootstrap";
 import useLoading from "../../hooks/useLoading";
 
 export default function WineGetAll() {  
@@ -61,11 +61,15 @@ export default function WineGetAll() {
         WinesGet();       
     }, [page, condition]);
 
+
     return (
         <>
             <Container>
                 <br />
                 <h4>Sva vina</h4>
+                <Form.Group controlId="review">                    
+                    <Form.Control placeholder="upiši min 3 slova" as="textarea" rows={1} name="search"/>
+                </Form.Group>
                 <div style={{ display: "flex", justifyContent: "center" }}>
                     <Pagination size="md" position="center">
                                 <Pagination.Prev onClick={previousPage} />
@@ -85,8 +89,7 @@ export default function WineGetAll() {
                                         <Card.Text>
                                             {w.wineName} <br /> {"Berba " + w.yearOfHarvest}
                                             <br /> {"Cijena: " + w.price + " €"}
-                                        </Card.Text>
-                                        
+                                        </Card.Text>                                        
                                         <Button variant="outline-light" size="md"   onClick={()=>UpdateWine(w.id)}>Promijeni</Button>
                                         <Button variant="outline-danger" size="md" className="buttonPosition"  onClick={()=>DeleteWine(w.id)}>Obriši</Button>
                                     </Card.Body>
@@ -95,6 +98,16 @@ export default function WineGetAll() {
                         ))}
                     </Row>
                 </Stack>
+                <br/>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                    <Pagination size="md" position="center">
+                                <Pagination.Prev onClick={previousPage} />
+                                <Pagination.Item disabled>{page}</Pagination.Item> 
+                                <Pagination.Next
+                                    onClick={nextPage}
+                                />
+                            </Pagination>
+                         </div>
             </Container>
         </>
     )

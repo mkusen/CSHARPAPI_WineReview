@@ -12,6 +12,11 @@ export default function NavBarWineReview() {
 
 const navigate = useNavigate();
 
+function Search(e){
+ var input = e.target.value;
+console.log(input)
+}
+
   return (
 
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -72,15 +77,7 @@ const navigate = useNavigate();
             </NavDropdown>
                    
           </Nav>
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="upiši min 3 znaka"
-              className="me-2"
-              aria-label="Pretraži"
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form>
+          
         </Navbar.Collapse>
       </Container>
     </Navbar>
