@@ -31,7 +31,7 @@ export const RoutesNames = {
 
 
 //remote server
-export const BACKEND_URL = 'https://mkusen-001-site1.ktempurl.com/api/v1';
+//export const BACKEND_URL = 'https://mkusen-001-site1.ktempurl.com/api/v1';
 
 //localhost
-//export const BACKEND_URL = 'https://localhost:7096/api/v1';
+export const BACKEND_URL = 'https://localhost:7096/api/v1';

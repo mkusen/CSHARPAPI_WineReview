@@ -97,6 +97,16 @@ export default function TastingGetAll() {
                             ))}
                         </Row>
                     </Stack>
+                    <br/>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                    <Pagination size="md" position="center">
+                                <Pagination.Prev onClick={previousPage} />
+                                <Pagination.Item disabled>{page}</Pagination.Item> 
+                                <Pagination.Next
+                                    onClick={nextPage}
+                                />
+                            </Pagination>
+                         </div>
                 </Container>
             </body>
         </>
