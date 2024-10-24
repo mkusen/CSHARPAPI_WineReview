@@ -61,9 +61,6 @@ async function getPages(page, condition) {
 }
 
 async function updateWine(id, Wine) {
-console.log("id: " + id + "wine: "+ Wine);
-
-
     return await HttpService.put('/Wine/' + id, Wine)
     .then((response)=>{
         return {error: false, message: response.data}
@@ -80,7 +77,15 @@ console.log("id: " + id + "wine: "+ Wine);
                     return {error:true, message:'Nije moguće izmijeniti podatke o vinu'}
         }
     })
+
+
 }
+async function setImage(id, image) {
+    console.log("id: " + id + "image: "+ image);
+    return await HttpService.put('/Wine/setPicture/' + id,image)
+    .then((response)=>{return  {error: false, message: response.data};})
+    .catch(()=>{ return {error: true, message: 'Problem kod postavljanja slike vina'};});
+  }
 
 export default{  
     getWines,  
@@ -88,5 +93,6 @@ export default{
     deleteWine,
     addWine,
     updateWine,
-    getPages
+    getPages,
+    setImage
 }

@@ -4,6 +4,7 @@ using CSHARPAPI_WineReview.Models;
 using CSHARPAPI_WineReview.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace CSHARPAPI_WineReview.Controllers
 {
@@ -191,6 +192,42 @@ namespace CSHARPAPI_WineReview.Controllers
             {
 
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("setPicture/{id:int}")]
+        public IActionResult SetPic(int id, ImageDTO image) {
+            if (id <= 0)
+            {
+                return BadRequest("Šifra mora biti veća od nula (0)");
+            }
+            if (image.Base64 == null || image.Base64?.Length == 0)
+            {
+                return BadRequest("Slika nije postavljena");
+            }
+            var p = _context.Wines.Find(id);
+            if (p == null)
+            {
+                return BadRequest("Ne postoji vino s šifrom: " + id + ".");
+            }
+            try
+            {
+                var ds = Path.DirectorySeparatorChar;
+                string dir = Path.Combine(Directory.GetCurrentDirectory()
+                    + ds + "wwwroot" + ds + "images" + ds + "wines");
+
+                if (!System.IO.Directory.Exists(dir))
+                {
+                    System.IO.Directory.CreateDirectory(dir);
+                }
+                var putanja = Path.Combine(dir + ds + id + ".png");
+                System.IO.File.WriteAllBytes(putanja, Convert.FromBase64String(image.Base64!));
+                return Ok("Uspješno pohranjena slika");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
             }
         }
     }

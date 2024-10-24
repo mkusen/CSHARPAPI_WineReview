@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import useLoading from "../../hooks/useLoading";
 import { useNavigate } from "react-router-dom";
 import WineService from "../../services/WineService";
-import { RoutesNames } from "../../constants";
-import { Button, Card, Col, Container, Row, Stack } from "react-bootstrap";
+import { BACKEND_URL, RoutesNames } from "../../constants";
+import { Button, Card, Col, Container, Image, Row, Stack } from "react-bootstrap";
+import noimage from '../../assets/noimage.png';
 
 
 
@@ -17,6 +18,7 @@ export default function WineGetById() {
     
     const [wine, setWine] = useState({});
     const { showLoading, hideLoading } = useLoading();
+    const [currentImage, setCurrentImage] = useState('');
 
     const navigate = useNavigate();
 
@@ -24,13 +26,18 @@ export default function WineGetById() {
         showLoading();
         await WineService.getWineById(id)
         .then((response)=>{
-            console.log(response);
-            console.log("id wine " + id);
             setWine(response.message);
+            if (response.message.pics != null) {
+                setCurrentImage(BACKEND_URL + response.message.pics + `?${Date.now()}`);
+            } else {
+                setCurrentImage(noimage);
+            }
             hideLoading();
         })
         .catch((e)=>{console.log(e)});
         hideLoading();
+
+        
         
     }
 
@@ -46,6 +53,15 @@ export default function WineGetById() {
  
      }
 
+     function pics(w) {
+
+        if (w.pics != null) {
+            return BACKEND_URL + w.pics + `?${Date.now()}`;
+        }
+
+        return noimage;
+    }
+
     useEffect(() => {
         WineById();       
     }, []);
@@ -53,24 +69,27 @@ export default function WineGetById() {
 
     return (
         <>
-           <Container>
+            <Container>
                 <br />
                 <Stack gap={3} >
-                    <Row>                      
-                            <Col key={wine.id}>
-                                <Card style={{ width: '18rem' }}>
-                                    <Card.Body>
-                                        <Card.Title>{wine.maker}</Card.Title>
-                                        <Card.Text>
-                                            {wine.wineName} <br /> {"Berba " + wine.yearOfHarvest}
-                                            <br /> {"Cijena: " + wine.price + " €"}
-                                        </Card.Text>
-                                        
-                                        <Button variant="outline-light" size="md" onClick={()=>UpdateWine(wine.id)}>Promijeni</Button>
-                                        <Button variant="outline-danger" size="md" className="buttonPosition" onClick={()=>DeleteWine(wine.id)}>Obriši</Button>
-                                    </Card.Body>
-                                </Card>
-                            </Col>                     
+                    <Row>
+                        <Col key={wine.id}>
+                       
+                            <Card style={{ width: '18rem' }}>
+                            <Card.Img variant="top" src={pics(wine)} />
+                                <Card.Body>
+                               
+                                    <Card.Title>{wine.maker}</Card.Title>
+                                    <Card.Text>
+                                        {wine.wineName} <br /> {"Berba " + wine.yearOfHarvest}
+                                        <br /> {"Cijena: " + wine.price + " €"}
+                                    </Card.Text>
+
+                                    <Button variant="outline-light" size="md" onClick={() => UpdateWine(wine.id)}>Promijeni</Button>
+                                    <Button variant="outline-danger" size="md" className="buttonPosition" onClick={() => DeleteWine(wine.id)}>Obriši</Button>
+                                </Card.Body>
+                            </Card>
+                        </Col>
                     </Row>
                 </Stack>
             </Container>
@@ -80,4 +99,5 @@ export default function WineGetById() {
 
 
 
-   }
+   
+}

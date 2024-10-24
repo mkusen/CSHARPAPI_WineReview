@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useLoading from "../../hooks/useLoading";
 import TastingService from "../../services/TastingService";
-import { Button, Card, Col, Container, Form, Pagination, Row, Stack } from "react-bootstrap";
+import { Button, Card, Col, Container, Pagination, Row, Stack } from "react-bootstrap";
 
 
 export default function TastingGetAll() {
